@@ -1,4 +1,4 @@
-import { getContoprixPreviewPage } from "@contoprix/next/server";
+import { createContoprixClient } from "@contoprix/next/server";
 
 import { ContoprixRenderer } from "@/contoprix/ContoprixRenderer";
 
@@ -13,9 +13,8 @@ export default async function PreviewPage({
 }: PreviewPageProps) {
   const { pageId } = await params;
 
-  const page = await getContoprixPreviewPage({
-    pageId
-  });
+  const client = createContoprixClient();
+  const page = await client.pages.getPreview(pageId);
 
   return <ContoprixRenderer page={page} />;
 }
