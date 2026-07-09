@@ -72,6 +72,7 @@ export default function NewBlog({
                 fill
                 sizes="(min-width: 1024px) 52vw, 100vw"
                 className="object-cover"
+                unoptimized
               />
             </a>
           ) : (

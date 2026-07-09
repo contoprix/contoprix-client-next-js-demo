@@ -28,7 +28,6 @@ function getMediaUrl(value: unknown) {
   if (typeof value === "string" && value.trim().length > 0) {
     return value;
   }
-
   if (!isRecord(value)) return undefined;
 
   return getText(value, "Url") ?? getText(value, "url");
@@ -69,6 +68,8 @@ function getLinks(data: Record<string, unknown>) {
     .filter((item): item is Record<string, unknown> => Boolean(item));
 }
 
+
+
 export default function HeaderList({
   contents,
 }: ContoprixComponentProps) {
@@ -76,8 +77,10 @@ export default function HeaderList({
   const logo = isRecord(data.logo) ? data.logo : undefined;
   const logoImage = logo?.logoimage ?? logo?.logoImage ?? logo?.image;
   const logoUrl = getMediaUrl(logoImage);
+  
   const logoAlt = getText(logo, "alttext") ?? getMediaAlt(logoImage) ?? "Logo";
   const links = getLinks(data);
+console.log("HeaderList data:", { data, logo, logoImage, logoUrl, logoAlt, links });
 
   return (
     <header className="sticky top-0 z-40 border-b border-zinc-200 bg-white/95 text-zinc-950 backdrop-blur">
@@ -91,6 +94,7 @@ export default function HeaderList({
                 fill
                 sizes="40px"
                 className="object-cover"
+                unoptimized
               />
             </span>
           ) : (

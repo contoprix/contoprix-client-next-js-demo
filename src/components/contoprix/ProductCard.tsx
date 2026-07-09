@@ -31,6 +31,7 @@ export default function ProductCard({
                 fill
                 sizes="(min-width: 768px) 45vw, 100vw"
                 className="object-cover"
+                unoptimized
               />
             </div>
           ) : (
