@@ -9,10 +9,10 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@contoprix/cli": "^0.0.15",
-    "@contoprix/client": "^0.0.15",
-    "@contoprix/next": "^0.0.15",
-    "@contoprix/react": "^0.0.15",
+    "@contoprix/cli": "^0.0.16",
+    "@contoprix/client": "^0.0.16",
+    "@contoprix/next": "^0.0.16",
+    "@contoprix/react": "^0.0.16",
     "next": "16.2.10",
     "react": "19.2.4",
     "react-dom": "19.2.4"
