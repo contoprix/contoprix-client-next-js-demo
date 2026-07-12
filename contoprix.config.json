@@ -1,0 +1,6 @@
+{
+  "baseUrl": "http://localhost:5176",
+  "languageCode": "en",
+  "componentsDir": "src/components/contoprix",
+  "outputDir": "src/contoprix"
+}

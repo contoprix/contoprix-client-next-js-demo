@@ -1,0 +1,1050 @@
+{
+  "version": 1,
+  "cmsVersion": "1.0.0",
+  "generatedAtUtc": "2026-07-12T13:37:45.7762685+00:00",
+  "fieldTypes": [
+    {
+      "id": "805afd2c-3464-4867-8a46-9235fc1926ff",
+      "name": "Text",
+      "code": "text",
+      "category": "Basic",
+      "clrType": "string"
+    },
+    {
+      "id": "b4b8079d-d112-49aa-9dd1-1f82c401a0c5",
+      "name": "Text Area",
+      "code": "textarea",
+      "category": "Basic",
+      "clrType": "string"
+    },
+    {
+      "id": "a6b1fbe9-4080-4c6e-9a15-a1340643aa2b",
+      "name": "Rich Text",
+      "code": "richtext",
+      "category": "Basic",
+      "clrType": "string"
+    },
+    {
+      "id": "30f99e1d-4f98-41ad-bf7d-deb98a86d276",
+      "name": "Markdown",
+      "code": "markdown",
+      "category": "Basic",
+      "clrType": "string"
+    },
+    {
+      "id": "f8fd7fa9-bc0e-46b1-bc3e-723a09ab25a0",
+      "name": "Email",
+      "code": "email",
+      "category": "Basic",
+      "clrType": "string"
+    },
+    {
+      "id": "fd360fd0-1575-48dd-9153-069b4c19aa8f",
+      "name": "URL",
+      "code": "url",
+      "category": "Basic",
+      "clrType": "string"
+    },
+    {
+      "id": "688740f6-1cb4-475a-bf8f-6dd9404b912a",
+      "name": "Phone",
+      "code": "phone",
+      "category": "Basic",
+      "clrType": "string"
+    },
+    {
+      "id": "0528044c-06a2-434c-9c4f-bf87f5c46105",
+      "name": "Color",
+      "code": "color",
+      "category": "Basic",
+      "clrType": "string"
+    },
+    {
+      "id": "c0b5fc79-9d4e-4127-8384-3dbc76fb1004",
+      "name": "Slug",
+      "code": "slug",
+      "category": "Basic",
+      "clrType": "string"
+    },
+    {
+      "id": "028bf125-da61-433a-bfe6-a4c7bce16afa",
+      "name": "Boolean",
+      "code": "boolean",
+      "category": "Basic",
+      "clrType": "bool"
+    },
+    {
+      "id": "1d6ded38-f416-4f2f-ab49-7189300c5286",
+      "name": "Password",
+      "code": "password",
+      "category": "Basic",
+      "clrType": "string"
+    },
+    {
+      "id": "ae726e87-5cf7-405b-b46d-7ac2bf6fb19a",
+      "name": "Code Editor",
+      "code": "code_editor",
+      "category": "Basic",
+      "clrType": "string"
+    },
+    {
+      "id": "75f26645-f5ff-4e6a-8c47-22c3ab580fc9",
+      "name": "Icon Picker",
+      "code": "icon_picker",
+      "category": "Basic",
+      "clrType": "string"
+    },
+    {
+      "id": "c42e5f23-4571-4836-b33a-03a15e7cbf84",
+      "name": "Number",
+      "code": "number",
+      "category": "Number",
+      "clrType": "int"
+    },
+    {
+      "id": "da31cccf-f238-4354-b63a-63f530dc799c",
+      "name": "Decimal",
+      "code": "decimal",
+      "category": "Number",
+      "clrType": "decimal"
+    },
+    {
+      "id": "255505b9-8e2b-4b10-999e-ba472e72fe88",
+      "name": "Rating",
+      "code": "rating",
+      "category": "Number",
+      "clrType": "int"
+    },
+    {
+      "id": "5e3f25b5-178a-486d-9698-45a74879ba34",
+      "name": "Currency",
+      "code": "currency",
+      "category": "Number",
+      "clrType": "decimal"
+    },
+    {
+      "id": "d7154649-3a8c-4b67-a9ae-7985af4f29aa",
+      "name": "Date",
+      "code": "date",
+      "category": "DateTime",
+      "clrType": "DateOnly"
+    },
+    {
+      "id": "26219d60-faf4-4aa7-9419-820f17ab112d",
+      "name": "Time",
+      "code": "time",
+      "category": "DateTime",
+      "clrType": "TimeOnly"
+    },
+    {
+      "id": "c5821fdb-f15c-42e4-85fa-50cccec88fe6",
+      "name": "Date Time",
+      "code": "datetime",
+      "category": "DateTime",
+      "clrType": "DateTime"
+    },
+    {
+      "id": "6908a171-1c22-4d8d-92bc-deee36a50d04",
+      "name": "Select",
+      "code": "select",
+      "category": "Choice",
+      "clrType": "string"
+    },
+    {
+      "id": "0b11c2e0-c5d7-47e9-8f6e-1590f65158b4",
+      "name": "Multi Select",
+      "code": "multiselect",
+      "category": "Choice",
+      "clrType": "string[]"
+    },
+    {
+      "id": "b4508d86-7a09-49e3-8e31-8a2fe72ff670",
+      "name": "Radio Group",
+      "code": "radio",
+      "category": "Choice",
+      "clrType": "string"
+    },
+    {
+      "id": "74f37c9d-738f-4ad6-95e7-62c18b07e4fb",
+      "name": "Checkbox",
+      "code": "checkbox",
+      "category": "Choice",
+      "clrType": "bool"
+    },
+    {
+      "id": "f7701e47-5675-4dbd-b4c7-2f08b9b2a075",
+      "name": "Image",
+      "code": "image",
+      "category": "Media",
+      "clrType": "Guid"
+    },
+    {
+      "id": "b3f72923-ce91-4d60-86f7-7a7c4496acad",
+      "name": "File",
+      "code": "file",
+      "category": "Media",
+      "clrType": "Guid"
+    },
+    {
+      "id": "5b2c056b-9f45-4c56-83d9-b3104f62631b",
+      "name": "Gallery",
+      "code": "gallery",
+      "category": "Media",
+      "clrType": "Guid[]"
+    },
+    {
+      "id": "94b93e55-9a09-415e-8819-8303b6b00984",
+      "name": "Media",
+      "code": "media",
+      "category": "Media",
+      "clrType": "Guid"
+    },
+    {
+      "id": "af8d24d4-e85a-40d5-b4eb-101f9bdd50e8",
+      "name": "Video",
+      "code": "video",
+      "category": "Media",
+      "clrType": "Guid"
+    },
+    {
+      "id": "6baa2cf0-c26a-4969-a60f-9bdbb5354af3",
+      "name": "Audio",
+      "code": "audio",
+      "category": "Media",
+      "clrType": "Guid"
+    },
+    {
+      "id": "eaffdb38-d70f-4bf4-a573-a07706a58fcb",
+      "name": "Relation",
+      "code": "relation",
+      "category": "Relation",
+      "clrType": "Guid"
+    },
+    {
+      "id": "0a719754-91fb-4d66-a943-8940f2037bc4",
+      "name": "Multi Relation",
+      "code": "multi_relation",
+      "category": "Relation",
+      "clrType": "Guid[]"
+    },
+    {
+      "id": "e7c2f813-b3a5-4d35-a516-a16b79c14aa0",
+      "name": "JSON",
+      "code": "json",
+      "category": "Advanced",
+      "clrType": "jsonb"
+    },
+    {
+      "id": "fba45238-7b26-4306-bc94-1e12389822b2",
+      "name": "Location",
+      "code": "location",
+      "category": "Advanced",
+      "clrType": "jsonb"
+    },
+    {
+      "id": "bb45a0ef-859a-485f-b6ed-2eacf07811c6",
+      "name": "AI Field",
+      "code": "ai_field",
+      "category": "Advanced",
+      "clrType": "string"
+    },
+    {
+      "id": "d2da513e-a323-4e75-bf41-7b07855fe3e7",
+      "name": "Formula",
+      "code": "formula",
+      "category": "Advanced",
+      "clrType": "string"
+    },
+    {
+      "id": "3136258a-1bea-41df-b7b8-f4472605b755",
+      "name": "Signature",
+      "code": "signature",
+      "category": "Advanced",
+      "clrType": "string"
+    },
+    {
+      "id": "f3b238e5-33a0-4e10-a185-7b4b9e4b876d",
+      "name": "QR Code",
+      "code": "qr_code",
+      "category": "Advanced",
+      "clrType": "string"
+    },
+    {
+      "id": "8525e424-4b50-4044-8b57-1697f17fb9d3",
+      "name": "Group",
+      "code": "group",
+      "category": "Layout",
+      "clrType": "jsonb"
+    },
+    {
+      "id": "79b9268c-5f68-474b-89ec-3ae41a5f2a09",
+      "name": "Object",
+      "code": "object",
+      "category": "Layout",
+      "clrType": "jsonb"
+    },
+    {
+      "id": "3da288eb-6636-4acc-8a49-6fa3fdcce551",
+      "name": "Component",
+      "code": "component",
+      "category": "Layout",
+      "clrType": "jsonb"
+    },
+    {
+      "id": "1952c3b3-bc6d-4969-8cab-5bf5d8415349",
+      "name": "Repeater",
+      "code": "repeater",
+      "category": "Layout",
+      "clrType": "jsonb"
+    },
+    {
+      "id": "78427ee0-4db0-4aa8-baf7-73a469ca7f3f",
+      "name": "Dynamic Zone",
+      "code": "dynamic_zone",
+      "category": "Layout",
+      "clrType": "jsonb"
+    }
+  ],
+  "contentTypes": [
+    {
+      "id": "fc526beb-dc84-4f8c-bd04-b4d4512f9378",
+      "name": "Header",
+      "code": "header",
+      "kind": "Single",
+      "description": "",
+      "icon": "file-text",
+      "supportsDraft": true,
+      "supportsVersioning": true,
+      "supportsLocalization": false,
+      "supportsScheduling": false,
+      "isEnabled": true,
+      "sortOrder": 1,
+      "fields": [
+        {
+          "id": "96564bc2-e58d-48d5-939f-f01205cc9aad",
+          "name": "Logo",
+          "code": "logo",
+          "fieldType": "component",
+          "required": false,
+          "localized": false,
+          "sortOrder": 0,
+          "parentFieldId": null,
+          "componentTypeId": "43edb4bb-cfa5-493b-98a6-9d8648dbbe2b",
+          "relatedContentTypeId": null,
+          "repeatable": false,
+          "allowRecursive": false,
+          "minItems": 0,
+          "maxItems": null,
+          "maxDepth": null,
+          "allowedComponentTypeIds": [],
+          "allowedComponents": [],
+          "settings": {
+            "componentTypeId": "43edb4bb-cfa5-493b-98a6-9d8648dbbe2b",
+            "relatedContentTypeId": null,
+            "repeatable": false,
+            "allowRecursive": false,
+            "minItems": 0,
+            "maxItems": null,
+            "maxDepth": null,
+            "allowedComponentTypeIds": [],
+            "allowedComponents": []
+          },
+          "options": [],
+          "children": [
+            {
+              "id": "5240c9b2-7324-4cdd-95b4-e70ac20d26d7",
+              "name": "Logo Alt",
+              "code": "logo_alt",
+              "fieldType": "text",
+              "required": false,
+              "localized": false,
+              "sortOrder": 1,
+              "parentFieldId": null,
+              "componentTypeId": null,
+              "relatedContentTypeId": null,
+              "repeatable": false,
+              "allowRecursive": false,
+              "minItems": null,
+              "maxItems": null,
+              "maxDepth": null,
+              "allowedComponentTypeIds": [],
+              "allowedComponents": [],
+              "settings": {
+                "componentTypeId": null,
+                "relatedContentTypeId": null,
+                "repeatable": false,
+                "allowRecursive": false,
+                "minItems": null,
+                "maxItems": null,
+                "maxDepth": null,
+                "allowedComponentTypeIds": [],
+                "allowedComponents": []
+              },
+              "options": [],
+              "children": []
+            },
+            {
+              "id": "f0bb07ad-bb82-4796-a3cb-b9557d6b47a5",
+              "name": "Logo Image",
+              "code": "logo_image",
+              "fieldType": "image",
+              "required": false,
+              "localized": false,
+              "sortOrder": 2,
+              "parentFieldId": null,
+              "componentTypeId": null,
+              "relatedContentTypeId": null,
+              "repeatable": false,
+              "allowRecursive": false,
+              "minItems": null,
+              "maxItems": null,
+              "maxDepth": null,
+              "allowedComponentTypeIds": [],
+              "allowedComponents": [],
+              "settings": {
+                "componentTypeId": null,
+                "relatedContentTypeId": null,
+                "repeatable": false,
+                "allowRecursive": false,
+                "minItems": null,
+                "maxItems": null,
+                "maxDepth": null,
+                "allowedComponentTypeIds": [],
+                "allowedComponents": []
+              },
+              "options": [],
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "8cd1889a-cfa0-432e-9938-09517c9ba878",
+          "name": "Header Links",
+          "code": "header_links",
+          "fieldType": "component",
+          "required": false,
+          "localized": false,
+          "sortOrder": 1,
+          "parentFieldId": null,
+          "componentTypeId": "06b2d165-1769-44e7-8775-96e4242bdb2e",
+          "relatedContentTypeId": null,
+          "repeatable": false,
+          "allowRecursive": false,
+          "minItems": 0,
+          "maxItems": null,
+          "maxDepth": null,
+          "allowedComponentTypeIds": [],
+          "allowedComponents": [],
+          "settings": {
+            "componentTypeId": "06b2d165-1769-44e7-8775-96e4242bdb2e",
+            "relatedContentTypeId": null,
+            "repeatable": false,
+            "allowRecursive": false,
+            "minItems": 0,
+            "maxItems": null,
+            "maxDepth": null,
+            "allowedComponentTypeIds": [],
+            "allowedComponents": []
+          },
+          "options": [],
+          "children": [
+            {
+              "id": "37e5a448-413f-4c8c-885b-1ffb6cb0685b",
+              "name": "Links",
+              "code": "link",
+              "fieldType": "repeater",
+              "required": false,
+              "localized": false,
+              "sortOrder": 1,
+              "parentFieldId": null,
+              "componentTypeId": null,
+              "relatedContentTypeId": null,
+              "repeatable": false,
+              "allowRecursive": false,
+              "minItems": null,
+              "maxItems": null,
+              "maxDepth": null,
+              "allowedComponentTypeIds": [],
+              "allowedComponents": [],
+              "settings": {
+                "componentTypeId": null,
+                "relatedContentTypeId": null,
+                "repeatable": false,
+                "allowRecursive": false,
+                "minItems": null,
+                "maxItems": null,
+                "maxDepth": null,
+                "allowedComponentTypeIds": [],
+                "allowedComponents": []
+              },
+              "options": [],
+              "children": [
+                {
+                  "id": "ed1d79d6-cbbe-47b1-8dc4-9ce5d89c2fd7",
+                  "name": "Display Link Name",
+                  "code": "display_link_name",
+                  "fieldType": "text",
+                  "required": false,
+                  "localized": false,
+                  "sortOrder": 1,
+                  "parentFieldId": "37e5a448-413f-4c8c-885b-1ffb6cb0685b",
+                  "componentTypeId": null,
+                  "relatedContentTypeId": null,
+                  "repeatable": false,
+                  "allowRecursive": false,
+                  "minItems": null,
+                  "maxItems": null,
+                  "maxDepth": null,
+                  "allowedComponentTypeIds": [],
+                  "allowedComponents": [],
+                  "settings": {
+                    "componentTypeId": null,
+                    "relatedContentTypeId": null,
+                    "repeatable": false,
+                    "allowRecursive": false,
+                    "minItems": null,
+                    "maxItems": null,
+                    "maxDepth": null,
+                    "allowedComponentTypeIds": [],
+                    "allowedComponents": []
+                  },
+                  "options": [],
+                  "children": []
+                },
+                {
+                  "id": "a3d2a6ee-a642-4cb3-8ceb-451a5e79cb55",
+                  "name": "Link Url",
+                  "code": "link_url",
+                  "fieldType": "url",
+                  "required": false,
+                  "localized": false,
+                  "sortOrder": 2,
+                  "parentFieldId": "37e5a448-413f-4c8c-885b-1ffb6cb0685b",
+                  "componentTypeId": null,
+                  "relatedContentTypeId": null,
+                  "repeatable": false,
+                  "allowRecursive": false,
+                  "minItems": null,
+                  "maxItems": null,
+                  "maxDepth": null,
+                  "allowedComponentTypeIds": [],
+                  "allowedComponents": [],
+                  "settings": {
+                    "componentTypeId": null,
+                    "relatedContentTypeId": null,
+                    "repeatable": false,
+                    "allowRecursive": false,
+                    "minItems": null,
+                    "maxItems": null,
+                    "maxDepth": null,
+                    "allowedComponentTypeIds": [],
+                    "allowedComponents": []
+                  },
+                  "options": [],
+                  "children": []
+                },
+                {
+                  "id": "93cdec74-4d30-4e73-a39b-54ce304c9d23",
+                  "name": "Is Link Blank Target",
+                  "code": "is_link_blank_target",
+                  "fieldType": "checkbox",
+                  "required": false,
+                  "localized": false,
+                  "sortOrder": 3,
+                  "parentFieldId": "37e5a448-413f-4c8c-885b-1ffb6cb0685b",
+                  "componentTypeId": null,
+                  "relatedContentTypeId": null,
+                  "repeatable": false,
+                  "allowRecursive": false,
+                  "minItems": null,
+                  "maxItems": null,
+                  "maxDepth": null,
+                  "allowedComponentTypeIds": [],
+                  "allowedComponents": [],
+                  "settings": {
+                    "componentTypeId": null,
+                    "relatedContentTypeId": null,
+                    "repeatable": false,
+                    "allowRecursive": false,
+                    "minItems": null,
+                    "maxItems": null,
+                    "maxDepth": null,
+                    "allowedComponentTypeIds": [],
+                    "allowedComponents": []
+                  },
+                  "options": [],
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "a0493a3f-e9cd-44d9-b920-a4500f868725",
+          "name": "Header Buttons",
+          "code": "header_buttons",
+          "fieldType": "component",
+          "required": false,
+          "localized": false,
+          "sortOrder": 3,
+          "parentFieldId": null,
+          "componentTypeId": "ef644b78-9600-42ee-be59-6cb69e33e1e8",
+          "relatedContentTypeId": null,
+          "repeatable": false,
+          "allowRecursive": false,
+          "minItems": 0,
+          "maxItems": null,
+          "maxDepth": null,
+          "allowedComponentTypeIds": [],
+          "allowedComponents": [],
+          "settings": {
+            "componentTypeId": "ef644b78-9600-42ee-be59-6cb69e33e1e8",
+            "relatedContentTypeId": null,
+            "repeatable": false,
+            "allowRecursive": false,
+            "minItems": 0,
+            "maxItems": null,
+            "maxDepth": null,
+            "allowedComponentTypeIds": [],
+            "allowedComponents": []
+          },
+          "options": [],
+          "children": [
+            {
+              "id": "857b5e90-d4ac-4a48-84da-1ef266655f33",
+              "name": "Button",
+              "code": "button",
+              "fieldType": "repeater",
+              "required": false,
+              "localized": false,
+              "sortOrder": 1,
+              "parentFieldId": null,
+              "componentTypeId": null,
+              "relatedContentTypeId": null,
+              "repeatable": false,
+              "allowRecursive": false,
+              "minItems": null,
+              "maxItems": null,
+              "maxDepth": null,
+              "allowedComponentTypeIds": [],
+              "allowedComponents": [],
+              "settings": {
+                "componentTypeId": null,
+                "relatedContentTypeId": null,
+                "repeatable": false,
+                "allowRecursive": false,
+                "minItems": null,
+                "maxItems": null,
+                "maxDepth": null,
+                "allowedComponentTypeIds": [],
+                "allowedComponents": []
+              },
+              "options": [],
+              "children": [
+                {
+                  "id": "8745b963-e71e-43c1-bdad-fcc131c417d5",
+                  "name": "Button Display Name",
+                  "code": "button_display_name",
+                  "fieldType": "text",
+                  "required": false,
+                  "localized": false,
+                  "sortOrder": 1,
+                  "parentFieldId": "857b5e90-d4ac-4a48-84da-1ef266655f33",
+                  "componentTypeId": null,
+                  "relatedContentTypeId": null,
+                  "repeatable": false,
+                  "allowRecursive": false,
+                  "minItems": null,
+                  "maxItems": null,
+                  "maxDepth": null,
+                  "allowedComponentTypeIds": [],
+                  "allowedComponents": [],
+                  "settings": {
+                    "componentTypeId": null,
+                    "relatedContentTypeId": null,
+                    "repeatable": false,
+                    "allowRecursive": false,
+                    "minItems": null,
+                    "maxItems": null,
+                    "maxDepth": null,
+                    "allowedComponentTypeIds": [],
+                    "allowedComponents": []
+                  },
+                  "options": [],
+                  "children": []
+                },
+                {
+                  "id": "39538e91-5b20-4049-94f9-3bafcd8faa6a",
+                  "name": "Button Icon",
+                  "code": "button_icon",
+                  "fieldType": "icon_picker",
+                  "required": false,
+                  "localized": false,
+                  "sortOrder": 2,
+                  "parentFieldId": "857b5e90-d4ac-4a48-84da-1ef266655f33",
+                  "componentTypeId": null,
+                  "relatedContentTypeId": null,
+                  "repeatable": false,
+                  "allowRecursive": false,
+                  "minItems": null,
+                  "maxItems": null,
+                  "maxDepth": null,
+                  "allowedComponentTypeIds": [],
+                  "allowedComponents": [],
+                  "settings": {
+                    "componentTypeId": null,
+                    "relatedContentTypeId": null,
+                    "repeatable": false,
+                    "allowRecursive": false,
+                    "minItems": null,
+                    "maxItems": null,
+                    "maxDepth": null,
+                    "allowedComponentTypeIds": [],
+                    "allowedComponents": []
+                  },
+                  "options": [],
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "componentTypes": [
+    {
+      "id": "ef644b78-9600-42ee-be59-6cb69e33e1e8",
+      "name": "Header Action Buttons",
+      "code": "header_action_buttons",
+      "description": "Header Action Buttons",
+      "icon": "layers",
+      "isEnabled": true,
+      "sortOrder": 1,
+      "fields": [
+        {
+          "id": "857b5e90-d4ac-4a48-84da-1ef266655f33",
+          "name": "Button",
+          "code": "button",
+          "fieldType": "repeater",
+          "required": false,
+          "localized": false,
+          "sortOrder": 1,
+          "parentFieldId": null,
+          "componentTypeId": null,
+          "relatedContentTypeId": null,
+          "repeatable": false,
+          "allowRecursive": false,
+          "minItems": null,
+          "maxItems": null,
+          "maxDepth": null,
+          "allowedComponentTypeIds": [],
+          "allowedComponents": [],
+          "settings": {
+            "componentTypeId": null,
+            "relatedContentTypeId": null,
+            "repeatable": false,
+            "allowRecursive": false,
+            "minItems": null,
+            "maxItems": null,
+            "maxDepth": null,
+            "allowedComponentTypeIds": [],
+            "allowedComponents": []
+          },
+          "options": [],
+          "children": [
+            {
+              "id": "8745b963-e71e-43c1-bdad-fcc131c417d5",
+              "name": "Button Display Name",
+              "code": "button_display_name",
+              "fieldType": "text",
+              "required": false,
+              "localized": false,
+              "sortOrder": 1,
+              "parentFieldId": "857b5e90-d4ac-4a48-84da-1ef266655f33",
+              "componentTypeId": null,
+              "relatedContentTypeId": null,
+              "repeatable": false,
+              "allowRecursive": false,
+              "minItems": null,
+              "maxItems": null,
+              "maxDepth": null,
+              "allowedComponentTypeIds": [],
+              "allowedComponents": [],
+              "settings": {
+                "componentTypeId": null,
+                "relatedContentTypeId": null,
+                "repeatable": false,
+                "allowRecursive": false,
+                "minItems": null,
+                "maxItems": null,
+                "maxDepth": null,
+                "allowedComponentTypeIds": [],
+                "allowedComponents": []
+              },
+              "options": [],
+              "children": []
+            },
+            {
+              "id": "39538e91-5b20-4049-94f9-3bafcd8faa6a",
+              "name": "Button Icon",
+              "code": "button_icon",
+              "fieldType": "icon_picker",
+              "required": false,
+              "localized": false,
+              "sortOrder": 2,
+              "parentFieldId": "857b5e90-d4ac-4a48-84da-1ef266655f33",
+              "componentTypeId": null,
+              "relatedContentTypeId": null,
+              "repeatable": false,
+              "allowRecursive": false,
+              "minItems": null,
+              "maxItems": null,
+              "maxDepth": null,
+              "allowedComponentTypeIds": [],
+              "allowedComponents": [],
+              "settings": {
+                "componentTypeId": null,
+                "relatedContentTypeId": null,
+                "repeatable": false,
+                "allowRecursive": false,
+                "minItems": null,
+                "maxItems": null,
+                "maxDepth": null,
+                "allowedComponentTypeIds": [],
+                "allowedComponents": []
+              },
+              "options": [],
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "06b2d165-1769-44e7-8775-96e4242bdb2e",
+      "name": "Header Link",
+      "code": "headerlink",
+      "description": "Header Link",
+      "icon": "layers",
+      "isEnabled": true,
+      "sortOrder": 1,
+      "fields": [
+        {
+          "id": "37e5a448-413f-4c8c-885b-1ffb6cb0685b",
+          "name": "Links",
+          "code": "link",
+          "fieldType": "repeater",
+          "required": false,
+          "localized": false,
+          "sortOrder": 1,
+          "parentFieldId": null,
+          "componentTypeId": null,
+          "relatedContentTypeId": null,
+          "repeatable": false,
+          "allowRecursive": false,
+          "minItems": null,
+          "maxItems": null,
+          "maxDepth": null,
+          "allowedComponentTypeIds": [],
+          "allowedComponents": [],
+          "settings": {
+            "componentTypeId": null,
+            "relatedContentTypeId": null,
+            "repeatable": false,
+            "allowRecursive": false,
+            "minItems": null,
+            "maxItems": null,
+            "maxDepth": null,
+            "allowedComponentTypeIds": [],
+            "allowedComponents": []
+          },
+          "options": [],
+          "children": [
+            {
+              "id": "ed1d79d6-cbbe-47b1-8dc4-9ce5d89c2fd7",
+              "name": "Display Link Name",
+              "code": "display_link_name",
+              "fieldType": "text",
+              "required": false,
+              "localized": false,
+              "sortOrder": 1,
+              "parentFieldId": "37e5a448-413f-4c8c-885b-1ffb6cb0685b",
+              "componentTypeId": null,
+              "relatedContentTypeId": null,
+              "repeatable": false,
+              "allowRecursive": false,
+              "minItems": null,
+              "maxItems": null,
+              "maxDepth": null,
+              "allowedComponentTypeIds": [],
+              "allowedComponents": [],
+              "settings": {
+                "componentTypeId": null,
+                "relatedContentTypeId": null,
+                "repeatable": false,
+                "allowRecursive": false,
+                "minItems": null,
+                "maxItems": null,
+                "maxDepth": null,
+                "allowedComponentTypeIds": [],
+                "allowedComponents": []
+              },
+              "options": [],
+              "children": []
+            },
+            {
+              "id": "a3d2a6ee-a642-4cb3-8ceb-451a5e79cb55",
+              "name": "Link Url",
+              "code": "link_url",
+              "fieldType": "url",
+              "required": false,
+              "localized": false,
+              "sortOrder": 2,
+              "parentFieldId": "37e5a448-413f-4c8c-885b-1ffb6cb0685b",
+              "componentTypeId": null,
+              "relatedContentTypeId": null,
+              "repeatable": false,
+              "allowRecursive": false,
+              "minItems": null,
+              "maxItems": null,
+              "maxDepth": null,
+              "allowedComponentTypeIds": [],
+              "allowedComponents": [],
+              "settings": {
+                "componentTypeId": null,
+                "relatedContentTypeId": null,
+                "repeatable": false,
+                "allowRecursive": false,
+                "minItems": null,
+                "maxItems": null,
+                "maxDepth": null,
+                "allowedComponentTypeIds": [],
+                "allowedComponents": []
+              },
+              "options": [],
+              "children": []
+            },
+            {
+              "id": "93cdec74-4d30-4e73-a39b-54ce304c9d23",
+              "name": "Is Link Blank Target",
+              "code": "is_link_blank_target",
+              "fieldType": "checkbox",
+              "required": false,
+              "localized": false,
+              "sortOrder": 3,
+              "parentFieldId": "37e5a448-413f-4c8c-885b-1ffb6cb0685b",
+              "componentTypeId": null,
+              "relatedContentTypeId": null,
+              "repeatable": false,
+              "allowRecursive": false,
+              "minItems": null,
+              "maxItems": null,
+              "maxDepth": null,
+              "allowedComponentTypeIds": [],
+              "allowedComponents": [],
+              "settings": {
+                "componentTypeId": null,
+                "relatedContentTypeId": null,
+                "repeatable": false,
+                "allowRecursive": false,
+                "minItems": null,
+                "maxItems": null,
+                "maxDepth": null,
+                "allowedComponentTypeIds": [],
+                "allowedComponents": []
+              },
+              "options": [],
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "43edb4bb-cfa5-493b-98a6-9d8648dbbe2b",
+      "name": "Logo",
+      "code": "logo",
+      "description": "Logo",
+      "icon": "layers",
+      "isEnabled": true,
+      "sortOrder": 1,
+      "fields": [
+        {
+          "id": "5240c9b2-7324-4cdd-95b4-e70ac20d26d7",
+          "name": "Logo Alt",
+          "code": "logo_alt",
+          "fieldType": "text",
+          "required": false,
+          "localized": false,
+          "sortOrder": 1,
+          "parentFieldId": null,
+          "componentTypeId": null,
+          "relatedContentTypeId": null,
+          "repeatable": false,
+          "allowRecursive": false,
+          "minItems": null,
+          "maxItems": null,
+          "maxDepth": null,
+          "allowedComponentTypeIds": [],
+          "allowedComponents": [],
+          "settings": {
+            "componentTypeId": null,
+            "relatedContentTypeId": null,
+            "repeatable": false,
+            "allowRecursive": false,
+            "minItems": null,
+            "maxItems": null,
+            "maxDepth": null,
+            "allowedComponentTypeIds": [],
+            "allowedComponents": []
+          },
+          "options": [],
+          "children": []
+        },
+        {
+          "id": "f0bb07ad-bb82-4796-a3cb-b9557d6b47a5",
+          "name": "Logo Image",
+          "code": "logo_image",
+          "fieldType": "image",
+          "required": false,
+          "localized": false,
+          "sortOrder": 2,
+          "parentFieldId": null,
+          "componentTypeId": null,
+          "relatedContentTypeId": null,
+          "repeatable": false,
+          "allowRecursive": false,
+          "minItems": null,
+          "maxItems": null,
+          "maxDepth": null,
+          "allowedComponentTypeIds": [],
+          "allowedComponents": [],
+          "settings": {
+            "componentTypeId": null,
+            "relatedContentTypeId": null,
+            "repeatable": false,
+            "allowRecursive": false,
+            "minItems": null,
+            "maxItems": null,
+            "maxDepth": null,
+            "allowedComponentTypeIds": [],
+            "allowedComponents": []
+          },
+          "options": [],
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": "ab005e23-6dca-4330-a7e8-2642d54d50ed",
+      "name": "Navigation Link",
+      "code": "navigation_link",
+      "description": "Navigation Link",
+      "icon": "layers",
+      "isEnabled": true,
+      "sortOrder": 1,
+      "fields": []
+    }
+  ]
+}

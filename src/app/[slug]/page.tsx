@@ -1,10 +1,13 @@
 import { getContoprixPage } from "@contoprix/next/server";
 
 import { ContoprixRenderer } from "@/contoprix/ContoprixRenderer";
-
-export default async function HomePage() {
+interface Props {
+params: Promise<{ slug?: string[] }>;
+}
+export default async function Pages({ params }: Props) {
+  const { slug } = await params;
   const page = await getContoprixPage({
-    slug: "home-page"
+    slug: slug ? `/${slug.join('/')}` : "home-page"
   });
 
   return <ContoprixRenderer page={page} />;
