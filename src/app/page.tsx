@@ -4,7 +4,7 @@ import { ContoprixRenderer } from "@/contoprix/ContoprixRenderer";
 
 export default async function HomePage() {
   const page = await getContoprixPage({
-    slug: "home-page"
+    slug: "/home-page"
   });
 
   return <ContoprixRenderer page={page} />;
