@@ -94,6 +94,26 @@ export function ContoprixPreviewRenderer({
     };
   }, [pageId, refresh]);
 
+  useEffect(() => {
+    // Compatibility guard for SDK versions that marked resolved content and
+    // global layout blocks as visually editable. Phase 1 only supports
+    // component blocks owned by the current page draft.
+    const editableBlockIds = new Set(
+      page.blocks
+        .filter((block) => block.kind === "component")
+        .map((block) => block.id)
+    );
+
+    for (const element of document.querySelectorAll<HTMLElement>("[data-contoprix-block-id]")) {
+      const blockId = element.dataset.contoprixBlockId;
+      if (blockId && editableBlockIds.has(blockId)) continue;
+      delete element.dataset.contoprixPageId;
+      delete element.dataset.contoprixVersionId;
+      delete element.dataset.contoprixBlockId;
+      delete element.dataset.contoprixComponentType;
+    }
+  }, [page]);
+
   const adminOrigin = getAllowedParentOrigin();
   return <PageRenderer
     page={page}
