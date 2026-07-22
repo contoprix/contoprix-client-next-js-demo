@@ -4,19 +4,14 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 import { PageRenderer } from "@contoprix/react/client";
 import type { ContoprixPage } from "@contoprix/types";
+import {
+  isContoprixPreviewRefreshMessage,
+} from "@contoprix/types";
 
 import components from "./components";
 
 const FALLBACK_POLLING_INTERVAL_MS = 60_000;
 const REFRESH_DEBOUNCE_MS = 150;
-const PREVIEW_MESSAGE_TYPE = "contoprix.preview.refresh";
-
-type PreviewRefreshMessage = {
-  type: typeof PREVIEW_MESSAGE_TYPE;
-  pageId?: string;
-  languageCode?: string;
-  occurredAt: number;
-};
 
 export function ContoprixPreviewRenderer({
   pageId,
@@ -75,7 +70,7 @@ export function ContoprixPreviewRenderer({
     const onMessage = (event: MessageEvent<unknown>) => {
       if (event.source !== window.parent) return;
       if (!allowedParentOrigins.has(event.origin)) return;
-      if (!isPreviewRefreshMessage(event.data)) return;
+      if (!isContoprixPreviewRefreshMessage(event.data)) return;
       if (event.data.pageId && event.data.pageId !== pageId) return;
 
       window.clearTimeout(debounceTimer);
@@ -99,20 +94,12 @@ export function ContoprixPreviewRenderer({
     };
   }, [pageId, refresh]);
 
-  return <PageRenderer page={page} components={components} />;
-}
-
-function isPreviewRefreshMessage(value: unknown): value is PreviewRefreshMessage {
-  if (!value || typeof value !== "object") return false;
-
-  const message = value as Partial<PreviewRefreshMessage>;
-  return (
-    message.type === PREVIEW_MESSAGE_TYPE &&
-    typeof message.occurredAt === "number" &&
-    (message.pageId === undefined || typeof message.pageId === "string") &&
-    (message.languageCode === undefined ||
-      typeof message.languageCode === "string")
-  );
+  const adminOrigin = getAllowedParentOrigin();
+  return <PageRenderer
+    page={page}
+    components={components}
+    visualEditing={adminOrigin ? { enabled: true, adminOrigin } : undefined}
+  />;
 }
 
 function getAllowedParentOrigins() {
@@ -124,10 +111,11 @@ function getAllowedParentOrigins() {
     if (origin) origins.add(origin);
   }
 
-  const referrerOrigin = toOrigin(document.referrer);
-  if (referrerOrigin) origins.add(referrerOrigin);
-
   return origins;
+}
+
+function getAllowedParentOrigin() {
+  return getAllowedParentOrigins().values().next().value as string | undefined;
 }
 
 function toOrigin(value: string | undefined) {

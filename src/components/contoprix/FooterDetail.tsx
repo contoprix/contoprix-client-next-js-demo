@@ -44,6 +44,7 @@ type FooterData = {
 
 export default function FooterDetail({
   content,
+  previewAttributes,
 }: ContoprixComponentProps) {
   const entry = asRecord(content);
   const data = asRecord(entry?.data) as FooterData | null;
@@ -64,7 +65,7 @@ export default function FooterDetail({
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-slate-950 text-white">
+    <footer {...previewAttributes} className="bg-slate-950 text-white">
       <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8 lg:py-16">
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-[1.4fr_repeat(3,1fr)]">
           <div className="max-w-sm">

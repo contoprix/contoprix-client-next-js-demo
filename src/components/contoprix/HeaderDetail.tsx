@@ -34,7 +34,7 @@ type HeaderData = {
   };
 };
 
-export default function HeaderDetail({ content }: ContoprixComponentProps) {
+export default function HeaderDetail({ content, previewAttributes }: ContoprixComponentProps) {
   const entry = asRecord(content);
   const data = asRecord(entry?.data) as HeaderData | null;
   const logo = data?.logo;
@@ -47,7 +47,7 @@ export default function HeaderDetail({ content }: ContoprixComponentProps) {
     : [];
 
   return (
-    <header className="border-b bg-background">
+    <header {...previewAttributes} className="border-b bg-background">
       <div className="mx-auto flex min-h-16 max-w-7xl items-center gap-6 px-4 sm:px-6 lg:px-8">
         <a href="/" className="flex shrink-0 items-center" aria-label={logo?.logo_alt || "Home"}>
           {logoUrl ? (

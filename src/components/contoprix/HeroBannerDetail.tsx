@@ -38,6 +38,7 @@ type HeroBannerData = {
 
 export default function HeroBannerDetail({
   content,
+  previewAttributes,
 }: ContoprixComponentProps) {
   const entry = asRecord(content);
   const data = asRecord(entry?.data) as HeroBannerData | null;
@@ -58,7 +59,7 @@ export default function HeroBannerDetail({
   );
 
   return (
-    <section className="relative isolate min-h-[560px] overflow-hidden bg-slate-950">
+    <section {...previewAttributes} className="relative isolate min-h-[560px] overflow-hidden bg-slate-950">
       {imageUrl ? (
         <>
           {/* CMS media can come from local or customer-configured hosts. */}
