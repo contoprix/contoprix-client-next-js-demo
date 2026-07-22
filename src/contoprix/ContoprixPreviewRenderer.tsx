@@ -103,8 +103,13 @@ export function ContoprixPreviewRenderer({
 }
 
 function getAllowedParentOrigins() {
-  const origins = new Set<string>();
+  const origins = new Set<string>(["https://admin.contoprix.com"]);
   const configuredOrigins = process.env.NEXT_PUBLIC_CONTOPRIX_ADMIN_ORIGINS;
+
+  if (process.env.NODE_ENV === "development") {
+    origins.add("http://localhost:3000");
+    origins.add("https://localhost:3000");
+  }
 
   for (const value of configuredOrigins?.split(",") ?? []) {
     const origin = toOrigin(value);
@@ -122,7 +127,8 @@ function toOrigin(value: string | undefined) {
   if (!value?.trim()) return null;
 
   try {
-    return new URL(value.trim()).origin;
+    const url = new URL(value.trim());
+    return url.protocol === "http:" || url.protocol === "https:" ? url.origin : null;
   } catch {
     return null;
   }
