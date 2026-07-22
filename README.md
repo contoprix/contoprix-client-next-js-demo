@@ -1,36 +1,49 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Contoprix Next.js demo
 
-## Getting Started
+This application renders published pages from the Contoprix delivery API.
 
-First, run the development server:
+## Configuration
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+Copy `.env.example` to `.env.local` and configure:
+
+- `CONTOPRIX_BASE_URL`: CMS API origin.
+- `CONTOPRIX_DELIVERY_KEY`: delivery API credential for this website.
+- `CONTOPRIX_WEBHOOK_SECRET`: long random secret shared with the CMS webhook.
+
+Do not expose these values with a `NEXT_PUBLIC_` prefix and do not commit real
+credentials.
+
+## Content refresh
+
+Production pages use two refresh mechanisms:
+
+1. A signed CMS webhook invalidates the affected page immediately after a
+   `page.published` or `content.published` event.
+2. Incremental Static Regeneration refreshes a page after at most 60 seconds if
+   a webhook is missed or delayed.
+
+Configure the CMS webhook destination as:
+
+```text
+https://your-site.example.com/api/contoprix/webhook
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Use the same secret as `CONTOPRIX_WEBHOOK_SECRET`. The CMS must send the HMAC
+signature in `X-Contoprix-Signature`; unsigned requests are rejected.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Saving a draft does not change the public website. Publish the page or content
+entry to update the delivery API and trigger revalidation.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Development
 
-## Learn More
+```bash
+npm install
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+Before deployment:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npm run lint
+npm run build
+```
