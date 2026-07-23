@@ -13,6 +13,8 @@
     "@contoprix/next": "^0.0.24",
     "@contoprix/react": "^0.0.24",
     "@contoprix/types": "^0.0.24",
+    "lucide": "^1.26.0",
+    "lucide-react": "^1.26.0",
     "next": "16.2.10",
     "react": "19.2.4",
     "react-dom": "19.2.4"
