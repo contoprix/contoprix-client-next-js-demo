@@ -23,6 +23,9 @@ export default function HeroBannerDetail({
 }: ContoprixComponentProps) {
   const entry = asRecord(content);
   const data = asRecord(entry?.data) as HeroBannerData | null;
+  const isEmptyPublishedEntry =
+    entry &&
+    Object.keys(data ?? {}).length === 0;
 
   const eyebrow = data?.eyebrow?.trim() || "";
   const heading = data?.heading?.trim() || "";
@@ -36,6 +39,27 @@ export default function HeroBannerDetail({
     !description &&
     !calloutDescription
   ) {
+    if (process.env.NODE_ENV === "development" && isEmptyPublishedEntry) {
+      return (
+        <section
+          {...previewAttributes}
+          className="mx-auto my-10 w-full max-w-5xl border border-amber-300 bg-amber-50 px-6 py-5 text-slate-900"
+        >
+          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-amber-700">
+            Contoprix demo notice
+          </p>
+          <h1 className="mt-3 text-2xl font-semibold text-slate-950">
+            The page loaded, but this published hero entry has no delivery data.
+          </h1>
+          <p className="mt-3 text-base leading-7 text-slate-700">
+            The CMS returned the block for{" "}
+            <code>{String(entry?.contentTypeCode ?? "unknown")}</code>,
+            but <code>content.data</code> was empty, so there was nothing to render.
+          </p>
+        </section>
+      );
+    }
+
     return null;
   }
 

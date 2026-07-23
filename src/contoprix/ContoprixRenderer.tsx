@@ -10,6 +10,7 @@ export function ContoprixRenderer({
 }: {
   page: ContoprixPage;
 }) {
+  console.log("ContoprixRenderer page", page);
   return (
     <PageRenderer
       page={page}

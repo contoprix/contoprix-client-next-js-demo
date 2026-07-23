@@ -13,10 +13,8 @@ interface Props {
 export default async function Pages({ params }: Props) {
   const { slug } = await params;
   const page = await getContoprixPage({
-    slug: slug ? `/${slug.join("/")}` : "home-page"
+    slug: `/${slug}`
   });
-  console.log("page", page);
-  console.log("slug", slug);  
   if(!page) {
     return <div>Page not found</div>;
   }
