@@ -1,39 +1,20 @@
 "use client";
 
+import { ArrowUpRight } from "lucide-react";
+
 import type { ContoprixComponentProps } from "@contoprix/react";
 
-type MediaValue = {
-  Id?: string;
-  id?: string;
-  FileName?: string;
-  fileName?: string;
-  Url?: string;
-  url?: string;
-  MimeType?: string;
-  mimeType?: string;
-  AltText?: string | null;
-  altText?: string | null;
-  Caption?: string | null;
-  caption?: string | null;
-};
-
-type HeroBannerCta = {
-  button_text?: string;
-  button_url?: string;
+type HeroCallout = {
+  callout_icon?: string | null;
+  description?: string | null;
+  __componentTypeId?: string;
 };
 
 type HeroBannerData = {
-  banner_image?: MediaValue | string | null;
-
-  // Your current CMS field code contains this spelling.
-  tittle?: string;
-
-  // Supports a future corrected field code as well.
-  title?: string;
-
-  description?: string;
-
-  hero_banner_cta?: HeroBannerCta | null;
+  eyebrow?: string | null;
+  heading?: string | null;
+  description?: string | null;
+  callout?: HeroCallout | null;
 };
 
 export default function HeroBannerDetail({
@@ -43,130 +24,151 @@ export default function HeroBannerDetail({
   const entry = asRecord(content);
   const data = asRecord(entry?.data) as HeroBannerData | null;
 
-  const imageUrl = getMediaUrl(data?.banner_image);
-  const imageAlt =
-    getMediaAlt(data?.banner_image) ||
-    data?.title ||
-    data?.tittle ||
-    "Hero banner";
-
-  const title = data?.title?.trim() || data?.tittle?.trim() || "";
+  const eyebrow = data?.eyebrow?.trim() || "";
+  const heading = data?.heading?.trim() || "";
   const description = data?.description?.trim() || "";
+  const calloutDescription =
+    data?.callout?.description?.trim() || "";
 
-  const ctaText = data?.hero_banner_cta?.button_text?.trim() || "";
-  const ctaUrl = normalizeUrl(
-    data?.hero_banner_cta?.button_url?.trim() || "#",
-  );
+  if (
+    !eyebrow &&
+    !heading &&
+    !description &&
+    !calloutDescription
+  ) {
+    return null;
+  }
 
   return (
-    <section {...previewAttributes} className="relative isolate min-h-[560px] overflow-hidden bg-slate-950">
-      {imageUrl ? (
-        <>
-          {/* CMS media can come from local or customer-configured hosts. */}
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={imageUrl}
-            alt={imageAlt}
-            className="absolute inset-0 -z-20 h-full w-full object-cover"
-          />
+    <section
+      {...previewAttributes}
+      className="relative isolate min-h-[660px] overflow-hidden border-t border-white/10 bg-[#07101a] text-white lg:min-h-[760px]"
+    >
+      {/* Main dark-to-orange background */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 -z-30 bg-[linear-gradient(105deg,#07101a_0%,#08111b_44%,#141214_66%,#422010_100%)]"
+      />
 
-          <div className="absolute inset-0 -z-10 bg-gradient-to-r from-black/85 via-black/60 to-black/20" />
+      {/* Right orange glow */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 -z-20 bg-[radial-gradient(circle_at_86%_12%,rgba(255,92,20,0.22),transparent_35%)]"
+      />
 
-          <div className="absolute inset-0 -z-10 bg-gradient-to-t from-black/60 via-transparent to-black/20" />
-        </>
-      ) : (
-        <div className="absolute inset-0 -z-20 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800" />
-      )}
+      {/* Grid */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 -z-10 bg-[linear-gradient(rgba(255,255,255,0.055)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.055)_1px,transparent_1px)] bg-[size:66px_66px]"
+      />
 
-      <div className="mx-auto flex min-h-[560px] max-w-7xl items-center px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
-        <div className="max-w-3xl">
-          {title ? (
-            <h1 className="text-balance text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">
-              {title}
+      {/* Soft bottom darkening */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 -z-10 bg-[linear-gradient(to_bottom,transparent_55%,rgba(2,8,15,0.2)_100%)]"
+      />
+
+      <div className="mx-auto grid min-h-[660px] max-w-[1880px] grid-cols-1 gap-14 px-6 py-20 sm:px-10 lg:min-h-[760px] lg:grid-cols-[minmax(0,2.65fr)_minmax(320px,0.85fr)] lg:items-center lg:gap-20 lg:px-[60px] lg:py-24 xl:gap-28">
+        {/* Main content */}
+        <div className="max-w-[1210px]">
+          {eyebrow ? (
+            <div className="mb-12 flex items-center gap-5 lg:mb-14">
+              <span
+                aria-hidden="true"
+                className="h-[2px] w-[60px] bg-[#ff5a0a]"
+              />
+
+              <span className="text-[14px] font-bold uppercase tracking-[0.3em] text-[#ff5a0a] sm:text-[15px]">
+                {eyebrow}
+              </span>
+            </div>
+          ) : null}
+
+          {heading ? (
+            <h1 className="max-w-[1210px] text-balance text-[50px] font-semibold leading-[0.98] tracking-[-0.052em] text-[#f8f8f7] sm:text-[68px] lg:text-[82px] xl:text-[104px]">
+              {formatHeading(heading)}
             </h1>
           ) : null}
 
           {description ? (
-            <p className="mt-6 max-w-2xl text-pretty text-base leading-8 text-white/80 sm:text-lg">
+            <p className="mt-10 max-w-[1120px] text-[20px] leading-[1.55] tracking-[-0.015em] text-[#bec0c4] sm:text-[24px] lg:mt-12 lg:text-[28px] lg:leading-[1.65]">
               {description}
             </p>
           ) : null}
-
-          {ctaText ? (
-            <div className="mt-9">
-              <a
-                href={ctaUrl}
-                target={isExternalUrl(ctaUrl) ? "_blank" : undefined}
-                rel={
-                  isExternalUrl(ctaUrl)
-                    ? "noopener noreferrer"
-                    : undefined
-                }
-                className="inline-flex min-h-12 items-center justify-center rounded-md bg-white px-6 py-3 text-sm font-semibold text-slate-950 shadow-sm transition duration-200 hover:bg-white/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
-              >
-                {ctaText}
-              </a>
-            </div>
-          ) : null}
         </div>
+
+        {/* Right callout */}
+        {calloutDescription ? (
+          <aside className="relative self-end border-l border-white/15 py-2 pl-8 lg:self-center lg:pl-9 xl:pl-12">
+            <ArrowUpRight
+              aria-hidden="true"
+              className="mb-9 size-7 text-[#ff5a0a] sm:size-8"
+              strokeWidth={2}
+            />
+
+            <p className="max-w-[390px] text-[18px] leading-[1.75] tracking-[-0.01em] text-[#bec0c4] sm:text-[20px] lg:text-[21px]">
+              {calloutDescription}
+            </p>
+          </aside>
+        ) : null}
       </div>
     </section>
   );
 }
 
+/**
+ * Makes a two-sentence heading display like the reference:
+ *
+ * Purpose-built capabilities.
+ * No plugin sprawl.
+ *
+ * CMS editors do not need to add a manual line break.
+ */
+function formatHeading(heading: string) {
+  const lines = splitHeadingIntoLines(heading);
+
+  if (lines.length <= 1) {
+    return heading;
+  }
+
+  return lines.map((line, index) => (
+    <span
+      key={`${line}-${index}`}
+      className="block"
+    >
+      {line}
+    </span>
+  ));
+}
+
+function splitHeadingIntoLines(value: string): string[] {
+  const manualLines = value
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .filter(Boolean);
+
+  if (manualLines.length > 1) {
+    return manualLines;
+  }
+
+  const sentences =
+    value.match(/[^.!?]+[.!?]+|[^.!?]+$/g)
+      ?.map((sentence) => sentence.trim())
+      .filter(Boolean) || [];
+
+  if (sentences.length === 2) {
+    return sentences;
+  }
+
+  return [value];
+}
+
 function asRecord(
   value: unknown,
 ): Record<string, unknown> | null {
-  return value && typeof value === "object" && !Array.isArray(value)
+  return value &&
+    typeof value === "object" &&
+    !Array.isArray(value)
     ? (value as Record<string, unknown>)
     : null;
-}
-
-function getMediaUrl(
-  value: MediaValue | string | null | undefined,
-): string {
-  if (typeof value === "string") {
-    return value.trim();
-  }
-
-  return value?.Url?.trim() || value?.url?.trim() || "";
-}
-
-function getMediaAlt(
-  value: MediaValue | string | null | undefined,
-): string {
-  if (!value || typeof value === "string") {
-    return "";
-  }
-
-  return value.AltText?.trim() || value.altText?.trim() || "";
-}
-
-function normalizeUrl(value: string): string {
-  const url = value.trim();
-
-  if (!url || url === "#") {
-    return "#";
-  }
-
-  if (
-    url.startsWith("/") ||
-    url.startsWith("#") ||
-    url.startsWith("mailto:") ||
-    url.startsWith("tel:") ||
-    url.startsWith("http://") ||
-    url.startsWith("https://")
-  ) {
-    return url;
-  }
-
-  if (url.startsWith("www.")) {
-    return `https://${url}`;
-  }
-
-  return `/${url.replace(/^\/+/, "")}`;
-}
-
-function isExternalUrl(url: string): boolean {
-  return url.startsWith("http://") || url.startsWith("https://");
 }
