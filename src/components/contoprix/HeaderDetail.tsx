@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 
 import type { ContoprixComponentProps } from "@contoprix/react";
+import Link from "next/link";
 
 type MediaValue = {
   Id?: string;
@@ -130,7 +131,7 @@ export default function HeaderDetail({
     >
       <div className="mx-auto flex min-h-[88px] max-w-[1880px] items-center px-5 sm:px-8 lg:min-h-[108px] lg:px-14 xl:px-16">
         {/* Logo */}
-        <a
+        <Link
           href="/"
           aria-label={logoAlt}
           className="flex shrink-0 items-center"
@@ -148,7 +149,7 @@ export default function HeaderDetail({
               {logoAlt}
             </span>
           )}
-        </a>
+        </Link>
 
         {/* Desktop navigation */}
         {navigationLinks.length > 0 ? (
@@ -163,7 +164,7 @@ export default function HeaderDetail({
                 item.innewtab === true;
 
               return (
-                <a
+                <Link
                   key={`${item.title || href}-${index}`}
                   href={href}
                   target={
@@ -185,7 +186,7 @@ export default function HeaderDetail({
                   ) : null}
 
                   <span>{item.title || href}</span>
-                </a>
+                </Link>
               );
             })}
           </nav>
@@ -293,7 +294,7 @@ export default function HeaderDetail({
                   item.innewtab === true;
 
                 return (
-                  <a
+                  <Link
                     key={`mobile-${item.title || href}-${index}`}
                     href={href}
                     target={
@@ -319,7 +320,7 @@ export default function HeaderDetail({
                     ) : null}
 
                     <span>{item.title || href}</span>
-                  </a>
+                  </Link>
                 );
               })}
             </nav>
