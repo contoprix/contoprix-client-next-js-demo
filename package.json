@@ -20,7 +20,7 @@
     "react-dom": "19.2.4"
   },
   "devDependencies": {
-    "@contoprix/cli": "^0.0.21",
+    "@contoprix/cli": "^0.0.24",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
