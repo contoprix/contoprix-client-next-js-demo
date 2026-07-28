@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { createElement, useState } from "react";
 import {
   Home,
   LogIn,
@@ -12,6 +12,8 @@ import {
 
 import type { ContoprixComponentProps } from "@contoprix/react";
 import Link from "next/link";
+
+import { SearchPanel } from "./SearchPanel";
 
 type MediaValue = {
   Id?: string;
@@ -249,34 +251,7 @@ export default function HeaderDetail({
 
       {/* Search panel */}
       {searchOpen ? (
-        <div className="border-t border-slate-200 bg-white">
-          <div className="mx-auto flex max-w-4xl items-center gap-3 px-5 py-5 sm:px-8">
-            <Search
-              aria-hidden="true"
-              className="size-5 shrink-0 text-slate-500"
-            />
-
-            <input
-              type="search"
-              autoFocus
-              placeholder="Search Contoprix..."
-              aria-label="Search"
-              className="h-12 min-w-0 flex-1 border border-slate-300 bg-white px-4 text-base text-slate-950 outline-none transition-colors placeholder:text-slate-400 focus:border-orange-600"
-            />
-
-            <button
-              type="button"
-              aria-label="Close search"
-              onClick={() => setSearchOpen(false)}
-              className="inline-flex size-11 shrink-0 items-center justify-center rounded-md text-slate-600 hover:bg-slate-100 hover:text-slate-950"
-            >
-              <X
-                aria-hidden="true"
-                className="size-5"
-              />
-            </button>
-          </div>
-        </div>
+        <SearchPanel onClose={() => setSearchOpen(false)} />
       ) : null}
 
       {/* Mobile menu */}
@@ -366,7 +341,6 @@ function HeaderAction({
   mobile = false,
 }: HeaderActionProps) {
   const title = button.title?.trim() || "Action";
-  const Icon = resolveIcon(button.icon);
   const href = normalizeOptionalHref(
     button.button_url,
   );
@@ -406,13 +380,7 @@ function HeaderAction({
         aria-label={title}
         className={classes}
       >
-        {Icon ? (
-          <Icon
-            aria-hidden="true"
-            className="size-5 shrink-0"
-            strokeWidth={2}
-          />
-        ) : null}
+        {renderIcon(button.icon)}
 
         {!compact ? <span>{title}</span> : null}
       </a>
@@ -426,17 +394,23 @@ function HeaderAction({
       onClick={() => onAction(button)}
       className={classes}
     >
-      {Icon ? (
-        <Icon
-          aria-hidden="true"
-          className="size-5 shrink-0"
-          strokeWidth={2}
-        />
-      ) : null}
+      {renderIcon(button.icon)}
 
       {!compact ? <span>{title}</span> : null}
     </button>
   );
+}
+
+function renderIcon(value?: string | null) {
+  const Icon = resolveIcon(value);
+
+  return Icon
+    ? createElement(Icon, {
+        "aria-hidden": "true",
+        className: "size-5 shrink-0",
+        strokeWidth: 2,
+      })
+    : null;
 }
 
 type ButtonClassOptions = {

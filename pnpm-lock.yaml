@@ -9,17 +9,17 @@ importers:
   .:
     dependencies:
       '@contoprix/client':
-        specifier: ^0.0.24
-        version: 0.0.24
+        specifier: ^0.0.27
+        version: 0.0.27
       '@contoprix/next':
-        specifier: ^0.0.24
-        version: 0.0.24(next@16.2.10(@babel/core@7.29.7)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+        specifier: ^0.0.27
+        version: 0.0.27(next@16.2.10(@babel/core@7.29.7)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       '@contoprix/react':
-        specifier: ^0.0.24
-        version: 0.0.24(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+        specifier: ^0.0.27
+        version: 0.0.27(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       '@contoprix/types':
-        specifier: ^0.0.24
-        version: 0.0.24
+        specifier: ^0.0.27
+        version: 0.0.27
       lucide:
         specifier: ^1.26.0
         version: 1.26.0
@@ -37,8 +37,8 @@ importers:
         version: 19.2.4(react@19.2.4)
     devDependencies:
       '@contoprix/cli':
-        specifier: ^0.0.21
-        version: 0.0.21
+        specifier: ^0.0.27
+        version: 0.0.27
       '@tailwindcss/postcss':
         specifier: ^4
         version: 4.3.3
@@ -137,40 +137,31 @@ packages:
     resolution: {integrity: sha512-4zBIxpPzowiZpusoFkyGVwakdRJUyuH5PxQ/PrqghfdFWWasvnCdPfQXHrenDai+gyLARulZjZowCOj6fjT4pA==}
     engines: {node: '>=6.9.0'}
 
-  '@contoprix/cli@0.0.21':
-    resolution: {integrity: sha512-0G4lkh+t2wnIyspMgvwc9rZghmufRSSC9+BfCmQd5Rw9A0EmdY3+1dueUn1Uh85olRBlUF449o11l30ttafutg==}
+  '@contoprix/cli@0.0.27':
+    resolution: {integrity: sha512-TQYWgcJ65Iu6dtBjPDFFUdknUnVjpGAt6dym5YIcnzy/vCZ6JcmmJfU2eIlsNGU62fLRAH7sKrxdQuTU7Tt2Qw==}
     hasBin: true
 
-  '@contoprix/client@0.0.21':
-    resolution: {integrity: sha512-O+iwzm+gibT+/CJ12FtX9KiTokeDnbnIJjz4LX5o6r7C6RUNPU9f0jwKJwoZdtGy0sEtGTIAkjZjOQwGokJcQQ==}
+  '@contoprix/client@0.0.27':
+    resolution: {integrity: sha512-Iu7Vz6l/MqToWwp49MGAtu1m+U+Px6TZE01OxNJ1OfE5eTVE93MFQoV2OEO+HSwL44bzLvHkoS1viwBTc+0JoQ==}
 
-  '@contoprix/client@0.0.24':
-    resolution: {integrity: sha512-t9/D3uP+NrJC4f3SoeiuLjY2y5BKt5/4W809qoxOPGrW45PIui6/HwmL+ySd6UlZAK2NoM0bt+NVfUbEP6nEbQ==}
-
-  '@contoprix/next@0.0.24':
-    resolution: {integrity: sha512-fdIdJZWUJLZXqqlO92kVq+CLWB0DKGwgOv1uGwt9CDUBGR5iJERfENfE2Aw1uDd1LZXyyhwrTeGuwdzZg3FmKQ==}
+  '@contoprix/next@0.0.27':
+    resolution: {integrity: sha512-ITOCzXPyGnZqrh8jKekBh+mtyWfzodjsw4y7duLyCie/O8dxF3kIxiob7cesNDr62LjnAEg6kMAAEFJL3jgQjw==}
     peerDependencies:
       next: ^16.0.0
       react: ^19.0.0
       react-dom: ^19.0.0
 
-  '@contoprix/react@0.0.24':
-    resolution: {integrity: sha512-qbjXoflL+5ITbWkKOOV7KU1q7E4gCg7BD8yPv2D4geSLYhCfPuIY5rUEtQu18cr1BaryqFwGagjZVK3xGd+yZw==}
+  '@contoprix/react@0.0.27':
+    resolution: {integrity: sha512-UtpjOiBq0B4H6Z0MoVgMDMiAGGMCGHoM3Pqs8imlh1ze8EueA96jUlelaInQshEgQnHt6ETaOZQ2VmQ5TW4+rQ==}
     peerDependencies:
       react: ^19.0.0
       react-dom: ^19.0.0
 
-  '@contoprix/shared@0.0.21':
-    resolution: {integrity: sha512-jsaIVgr7RIVXC+9FgnmuIMlDR5ZszV7HFnusIhDJefjwDWWUZDZWH8bLailHPxJn8etiPWCp7V1tE/w+J/qlvQ==}
+  '@contoprix/shared@0.0.27':
+    resolution: {integrity: sha512-P30lYgqQ5ytboPdwyiECmSHmSvx8ruhpTg0GRRsrgn7sU4b/qIzoOEoyDL4+7tt94f+G0faN3RCfSvheWXrGnw==}
 
-  '@contoprix/shared@0.0.24':
-    resolution: {integrity: sha512-lf7ITPdDSF7B+i+MOZlkB7yGIM5tOCwiVj6HVAjAxPZH1VvKSiBMNTrqeLLgxI49wUBQNEBQGsSc8bmDydhdcg==}
-
-  '@contoprix/types@0.0.21':
-    resolution: {integrity: sha512-8PBy3g2PZM4NnKfDhKRtRQWhM4DCniQBqopdbG597yhZKE+547qrs4ISW/mysFAhIr2aGIHYZBzrkEKZp+4nyg==}
-
-  '@contoprix/types@0.0.24':
-    resolution: {integrity: sha512-C9vvTzwtDrcn4TWMOLvEUEFSHcQ8RIibjrZE28QSsqBwysE+EGUEVytAclw8To6TxTyamL3eU8SPimqjKPt+yw==}
+  '@contoprix/types@0.0.27':
+    resolution: {integrity: sha512-EifW4rNjbKqTjh5U15YqncNpKeh6NXPoWdeF0vsDoOE/R0bJ8w/6Wk5VEgJ+SI0acGFQoxLE0trsSOHdB88xFg==}
 
   '@emnapi/core@1.10.0':
     resolution: {integrity: sha512-yq6OkJ4p82CAfPl0u9mQebQHKPJkY7WrIuk205cTYnYe+k2Z8YBh11FrbRG/H6ihirqcacOgl2BIO8oyMQLeXw==}
@@ -2131,47 +2122,38 @@ snapshots:
       '@babel/helper-string-parser': 7.29.7
       '@babel/helper-validator-identifier': 7.29.7
 
-  '@contoprix/cli@0.0.21':
+  '@contoprix/cli@0.0.27':
     dependencies:
-      '@contoprix/client': 0.0.21
-      '@contoprix/types': 0.0.21
+      '@contoprix/client': 0.0.27
+      '@contoprix/types': 0.0.27
       commander: 14.0.3
       picocolors: 1.1.1
       prompts: 2.4.2
 
-  '@contoprix/client@0.0.21':
+  '@contoprix/client@0.0.27':
     dependencies:
-      '@contoprix/shared': 0.0.21
-      '@contoprix/types': 0.0.21
+      '@contoprix/shared': 0.0.27
+      '@contoprix/types': 0.0.27
 
-  '@contoprix/client@0.0.24':
+  '@contoprix/next@0.0.27(next@16.2.10(@babel/core@7.29.7)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
     dependencies:
-      '@contoprix/shared': 0.0.24
-      '@contoprix/types': 0.0.24
-
-  '@contoprix/next@0.0.24(next@16.2.10(@babel/core@7.29.7)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
-    dependencies:
-      '@contoprix/client': 0.0.24
-      '@contoprix/react': 0.0.24(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
-      '@contoprix/types': 0.0.24
+      '@contoprix/client': 0.0.27
+      '@contoprix/react': 0.0.27(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      '@contoprix/types': 0.0.27
       next: 16.2.10(@babel/core@7.29.7)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       react: 19.2.4
       react-dom: 19.2.4(react@19.2.4)
 
-  '@contoprix/react@0.0.24(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
+  '@contoprix/react@0.0.27(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
     dependencies:
-      '@contoprix/client': 0.0.24
-      '@contoprix/types': 0.0.24
+      '@contoprix/client': 0.0.27
+      '@contoprix/types': 0.0.27
       react: 19.2.4
       react-dom: 19.2.4(react@19.2.4)
 
-  '@contoprix/shared@0.0.21': {}
+  '@contoprix/shared@0.0.27': {}
 
-  '@contoprix/shared@0.0.24': {}
-
-  '@contoprix/types@0.0.21': {}
-
-  '@contoprix/types@0.0.24': {}
+  '@contoprix/types@0.0.27': {}
 
   '@emnapi/core@1.10.0':
     dependencies:
