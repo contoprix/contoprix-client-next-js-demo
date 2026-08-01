@@ -8,10 +8,22 @@ Copy `.env.example` to `.env.local` and configure:
 
 - `CONTOPRIX_BASE_URL`: CMS API origin.
 - `CONTOPRIX_DELIVERY_KEY`: delivery API credential for this website.
+- `CONTOPRIX_DEMO_FORM_CODE`: published form code rendered at `/contact-us` (defaults to `contact-us`).
 - `CONTOPRIX_WEBHOOK_SECRET`: long random secret shared with the CMS webhook.
 
 Do not expose these values with a `NEXT_PUBLIC_` prefix and do not commit real
 credentials.
+
+## Delivery form demo
+
+The `/contact-us` route loads the published form schema through
+`client.forms.get()` on the server. The interactive form posts to a same-origin
+route handler, which submits through `client.forms.submit()`. This keeps the
+delivery key out of browser JavaScript while preserving CMS validation and the
+form-version submission token.
+
+Publish a form in Contoprix with the code configured by
+`CONTOPRIX_DEMO_FORM_CODE` before opening the page.
 
 ## Content refresh
 
