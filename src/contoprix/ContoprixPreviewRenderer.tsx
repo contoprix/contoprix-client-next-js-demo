@@ -4,14 +4,8 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 import { PageRenderer } from "@contoprix/react/client";
 import type { ContoprixPage } from "@contoprix/types";
-import {
-  isContoprixPreviewRefreshMessage,
-} from "@contoprix/types";
 
 import components from "./components";
-
-const FALLBACK_POLLING_INTERVAL_MS = 60_000;
-const REFRESH_DEBOUNCE_MS = 150;
 
 export function ContoprixPreviewRenderer({
   pageId,
@@ -24,13 +18,19 @@ export function ContoprixPreviewRenderer({
   const requestInFlight = useRef(false);
   const refreshQueued = useRef(false);
   const lastPayload = useRef(JSON.stringify(initialPage));
+  const controllerRef = useRef<AbortController | null>(null);
 
-  const refresh = useCallback(async (signal?: AbortSignal) => {
+  // Fetches the latest preview payload for this page. Its own in-flight /
+  // queued dedup stays here since it's specific to how *this app* refetches
+  // data - VisualEditingBridge (below) only decides *when* to call this.
+  const refresh = useCallback(async () => {
     if (document.visibilityState === "hidden") return;
     if (requestInFlight.current) {
       refreshQueued.current = true;
       return;
     }
+
+    const controller = controllerRef.current;
 
     requestInFlight.current = true;
     try {
@@ -38,7 +38,7 @@ export function ContoprixPreviewRenderer({
         refreshQueued.current = false;
         const response = await fetch(
           `/api/contoprix/preview/pages/${encodeURIComponent(pageId)}`,
-          { cache: "no-store", signal }
+          { cache: "no-store", signal: controller?.signal }
         );
 
         if (!response.ok) return;
@@ -49,7 +49,7 @@ export function ContoprixPreviewRenderer({
           lastPayload.current = payload;
           setPage(nextPage);
         }
-      } while (refreshQueued.current && !signal?.aborted);
+      } while (refreshQueued.current && !controller?.signal.aborted);
     } catch (error) {
       if (!(error instanceof DOMException && error.name === "AbortError")) {
         console.warn("Contoprix preview refresh failed.", error);
@@ -61,38 +61,9 @@ export function ContoprixPreviewRenderer({
 
   useEffect(() => {
     const controller = new AbortController();
-    let debounceTimer: number | undefined;
-    const allowedParentOrigins = getAllowedParentOrigins();
-    const timer = window.setInterval(
-      () => void refresh(controller.signal),
-      FALLBACK_POLLING_INTERVAL_MS
-    );
-    const onMessage = (event: MessageEvent<unknown>) => {
-      if (event.source !== window.parent) return;
-      if (!allowedParentOrigins.has(event.origin)) return;
-      if (!isContoprixPreviewRefreshMessage(event.data)) return;
-      if (event.data.pageId && event.data.pageId !== pageId) return;
-
-      window.clearTimeout(debounceTimer);
-      debounceTimer = window.setTimeout(
-        () => void refresh(controller.signal),
-        REFRESH_DEBOUNCE_MS
-      );
-    };
-    const onVisibilityChange = () => {
-      if (document.visibilityState === "visible") void refresh(controller.signal);
-    };
-
-    window.addEventListener("message", onMessage);
-    document.addEventListener("visibilitychange", onVisibilityChange);
-    return () => {
-      controller.abort();
-      window.clearTimeout(debounceTimer);
-      window.clearInterval(timer);
-      window.removeEventListener("message", onMessage);
-      document.removeEventListener("visibilitychange", onVisibilityChange);
-    };
-  }, [pageId, refresh]);
+    controllerRef.current = controller;
+    return () => controller.abort();
+  }, [pageId]);
 
   useEffect(() => {
     // Compatibility guard for SDK versions that marked resolved content and
@@ -114,11 +85,20 @@ export function ContoprixPreviewRenderer({
     }
   }, [page]);
 
-  const adminOrigin = getAllowedParentOrigin();
+  const allowedOrigins = Array.from(getAllowedParentOrigins());
+  const adminOrigin = allowedOrigins[0];
+
   return <PageRenderer
     page={page}
     components={components}
-    visualEditing={adminOrigin ? { enabled: true, adminOrigin } : undefined}
+    visualEditing={adminOrigin ? {
+      enabled: true,
+      adminOrigin,
+      // The rest of our allowed origins (e.g. localhost during dev),
+      // beyond the single `adminOrigin` postMessage replies target.
+      trustedRefreshOrigins: allowedOrigins,
+      onRefresh: () => void refresh()
+    } : undefined}
   />;
 }
 
@@ -137,10 +117,6 @@ function getAllowedParentOrigins() {
   }
 
   return origins;
-}
-
-function getAllowedParentOrigin() {
-  return getAllowedParentOrigins().values().next().value as string | undefined;
 }
 
 function toOrigin(value: string | undefined) {

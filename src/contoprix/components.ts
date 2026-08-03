@@ -1,4 +1,5 @@
 import { CapabilitiesSectionDetail, HeaderActionButtons, HeaderDetail, Headerlink, Logo, NavigationLink } from "@/components/contoprix";
+import BlogPostDetail from "@/components/contoprix/BlogPostDetail";
 import FooterDetail from "@/components/contoprix/FooterDetail";
 import HeroBannerDetail from "@/components/contoprix/HeroBannerDetail";
 
@@ -12,6 +13,7 @@ export const components = {
 "hero_banner-detail": HeroBannerDetail,
 "footer-detail": FooterDetail,
 "capabilities_section-detail": CapabilitiesSectionDetail,
+"blog_post-detail":BlogPostDetail,
 };
 
 export default components;
