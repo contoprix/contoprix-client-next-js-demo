@@ -8,7 +8,7 @@ export const revalidate = 60;
 
 export default async function HomePage() {
   const page = await getContoprixPage({
-    slug: "home-page"
+    slug: "/"
   });
 
   return <ContoprixRenderer page={page} />;

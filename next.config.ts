@@ -37,6 +37,12 @@ function toHttpOrigin(value: string) {
 }
 
 const nextConfig: NextConfig = {
+  // jsdom (used by isomorphic-dompurify for server-side HTML sanitization,
+  // via @contoprix/react's rich-text/markdown field renderers) reads its own
+  // asset files via fs.readFileSync at runtime - bundling it into the server
+  // chunk breaks those relative paths (ENOENT on default-stylesheet.css).
+  serverExternalPackages: ["jsdom", "isomorphic-dompurify"],
+
   turbopack: {
     root: path.resolve(process.cwd(), "../.."),
   },

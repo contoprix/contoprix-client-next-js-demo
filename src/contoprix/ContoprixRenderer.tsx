@@ -4,6 +4,7 @@ import { BlockRenderer, PageRenderer } from "@contoprix/react/client";
 import type { ContoprixPage } from "@contoprix/types";
 
 import components from "./components";
+import { contoprixSchemas } from "./schema";
 
 export function ContoprixRenderer({
   page,
@@ -24,6 +25,7 @@ export function ContoprixRenderer({
               key={`${block.id}-${index}`}
               block={block}
               components={components}
+              schemas={contoprixSchemas}
             />
           ))}
       </>
@@ -34,6 +36,7 @@ export function ContoprixRenderer({
     <PageRenderer
       page={page}
       components={components}
+      schemas={contoprixSchemas}
     />
   );
 }

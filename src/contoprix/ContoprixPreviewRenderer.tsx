@@ -2,10 +2,12 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
-import { PageRenderer } from "@contoprix/react/client";
-import type { ContoprixPage } from "@contoprix/types";
+import { PageRenderer, buildSchemaRegistry } from "@contoprix/react/client";
+import type { ContoprixPage, ContoprixSchemaRegistry } from "@contoprix/types";
+import type { SdkSchema } from "@contoprix/client";
 
 import components from "./components";
+import { contoprixSchemas } from "./schema";
 
 export function ContoprixPreviewRenderer({
   pageId,
@@ -15,10 +17,31 @@ export function ContoprixPreviewRenderer({
   initialPage: ContoprixPage;
 }) {
   const [page, setPage] = useState(initialPage);
+  // Starts from the build-time pulled schema, then layers in the live
+  // preview-schema endpoint below — a component type created moments ago
+  // won't be in the pulled file until the next `contoprix pull`.
+  const [schemas, setSchemas] = useState<ContoprixSchemaRegistry>(contoprixSchemas);
   const requestInFlight = useRef(false);
   const refreshQueued = useRef(false);
   const lastPayload = useRef(JSON.stringify(initialPage));
   const controllerRef = useRef<AbortController | null>(null);
+
+  // Best-effort, fire-and-forget alongside the page refresh below — a
+  // component type created moments ago needs this to render at all before
+  // the next `contoprix pull`, but staleness here isn't as critical as page
+  // content, so it skips the in-flight/queued dance that guards `refresh`.
+  const refreshSchema = useCallback((signal?: AbortSignal) => {
+    fetch("/api/contoprix/preview/schema", { cache: "no-store", signal })
+      .then((response) => (response.ok ? response.json() as Promise<SdkSchema> : null))
+      .then((sdkSchema) => {
+        if (sdkSchema) setSchemas({ ...contoprixSchemas, ...buildSchemaRegistry(sdkSchema) });
+      })
+      .catch((error) => {
+        if (!(error instanceof DOMException && error.name === "AbortError")) {
+          console.warn("Contoprix preview schema refresh failed.", error);
+        }
+      });
+  }, []);
 
   // Fetches the latest preview payload for this page. Its own in-flight /
   // queued dedup stays here since it's specific to how *this app* refetches
@@ -31,6 +54,7 @@ export function ContoprixPreviewRenderer({
     }
 
     const controller = controllerRef.current;
+    refreshSchema(controller?.signal);
 
     requestInFlight.current = true;
     try {
@@ -57,13 +81,14 @@ export function ContoprixPreviewRenderer({
     } finally {
       requestInFlight.current = false;
     }
-  }, [pageId]);
+  }, [pageId, refreshSchema]);
 
   useEffect(() => {
     const controller = new AbortController();
     controllerRef.current = controller;
+    refreshSchema(controller.signal);
     return () => controller.abort();
-  }, [pageId]);
+  }, [pageId, refreshSchema]);
 
   useEffect(() => {
     // Compatibility guard for SDK versions that marked resolved content and
@@ -85,12 +110,15 @@ export function ContoprixPreviewRenderer({
     }
   }, [page]);
 
-  const allowedOrigins = Array.from(getAllowedParentOrigins());
-  const adminOrigin = allowedOrigins[0];
+  const allowedOriginSet = getAllowedParentOrigins();
+  const allowedOrigins = Array.from(allowedOriginSet);
+  const adminOrigin = resolveAdminOrigin(allowedOriginSet);
 
   return <PageRenderer
     page={page}
     components={components}
+    schemas={schemas}
+    renderMode="editor"
     visualEditing={adminOrigin ? {
       enabled: true,
       adminOrigin,
@@ -100,6 +128,29 @@ export function ContoprixPreviewRenderer({
       onRefresh: () => void refresh()
     } : undefined}
   />;
+}
+
+// The iframe doesn't otherwise know which allowed origin actually embedded
+// it (e.g. a local dev admin on localhost:3000 vs. production), so postMessage
+// replies were always targeted at the hardcoded production origin below —
+// silently dropped by the browser whenever the real parent was anything else.
+// The admin app stamps its own origin onto the preview URL (?contoprixAdminOrigin=...)
+// specifically so this iframe doesn't have to guess it; document.referrer is
+// checked as a fallback but is empty for this navigation in practice.
+function resolveAdminOrigin(allowedOrigins: Set<string>) {
+  if (typeof window !== "undefined") {
+    const fromQuery = new URLSearchParams(window.location.search).get("contoprixAdminOrigin");
+    if (fromQuery && allowedOrigins.has(fromQuery)) return fromQuery;
+  }
+  if (typeof document !== "undefined" && document.referrer) {
+    try {
+      const referrerOrigin = new URL(document.referrer).origin;
+      if (allowedOrigins.has(referrerOrigin)) return referrerOrigin;
+    } catch {
+      // Malformed/absent referrer falls through to the default below.
+    }
+  }
+  return Array.from(allowedOrigins)[0];
 }
 
 function getAllowedParentOrigins() {

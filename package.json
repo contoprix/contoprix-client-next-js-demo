@@ -9,10 +9,10 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@contoprix/client": "^1.0.2",
-    "@contoprix/next": "^1.0.2",
-    "@contoprix/react": "^1.0.2",
-    "@contoprix/types": "^1.0.2",
+    "@contoprix/client": "^1.0.5",
+    "@contoprix/next": "^1.0.5",
+    "@contoprix/react": "^1.0.5",
+    "@contoprix/types": "^1.0.5",
     "lucide": "^1.26.0",
     "lucide-react": "^1.26.0",
     "next": "16.2.10",
@@ -20,7 +20,7 @@
     "react-dom": "19.2.4"
   },
   "devDependencies": {
-    "@contoprix/cli": "^1.0.2",
+    "@contoprix/cli": "^1.0.5",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
