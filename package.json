@@ -13,6 +13,7 @@
     "@contoprix/next": "^1.0.5",
     "@contoprix/react": "^1.0.5",
     "@contoprix/types": "^1.0.5",
+    "isomorphic-dompurify": "^3.22.0",
     "lucide": "^1.26.0",
     "lucide-react": "^1.26.0",
     "next": "16.2.10",

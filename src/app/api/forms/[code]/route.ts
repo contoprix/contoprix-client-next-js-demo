@@ -6,6 +6,28 @@ type RouteContext = {
   params: Promise<{ code: string }>;
 };
 
+// Schema fetch for the generic form renderer (`@contoprix/react`'s
+// `GenericFormRenderer`, wired in by `BlockRenderer` for "form" blocks with
+// no registered override). Server-side only so the delivery key never
+// reaches the browser; the response includes a fresh submissionToken.
+export async function GET(_request: Request, context: RouteContext) {
+  const { code } = await context.params;
+
+  try {
+    const form = await getFormsClient().forms.get(code);
+    return NextResponse.json(form, {
+      status: 200,
+      headers: { "cache-control": "no-store" },
+    });
+  } catch (error) {
+    console.error(`Contoprix form "${code}" could not be loaded.`, error);
+    return NextResponse.json(
+      { message: `Form "${code}" was not found.` },
+      { status: 404 },
+    );
+  }
+}
+
 export async function POST(request: Request, context: RouteContext) {
   const { code } = await context.params;
 
