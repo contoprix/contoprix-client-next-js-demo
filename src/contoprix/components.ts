@@ -1,19 +1,22 @@
-import { CapabilitiesSectionDetail, HeaderActionButtons, HeaderDetail, Headerlink, Logo, NavigationLink } from "@/components/contoprix";
-import BlogPostDetail from "@/components/contoprix/BlogPostDetail";
-import FooterDetail from "@/components/contoprix/FooterDetail";
-import HeroBannerDetail from "@/components/contoprix/HeroBannerDetail";
+import type { ComponentRegistry } from "@contoprix/react";
 
-
-export const components = {
-"header-detail": HeaderDetail,
-"header_buttons": HeaderActionButtons,
-"header_links": Headerlink,
-"logo": Logo,
-"navigation_link": NavigationLink,
-"hero_banner-detail": HeroBannerDetail,
-"footer-detail": FooterDetail,
-"capabilities_section-detail": CapabilitiesSectionDetail,
-"blog_post-detail":BlogPostDetail,
-};
+// This demo intentionally ships with zero custom overrides. Every block on
+// every page -- header, footer, and CMS content alike -- resolves through
+// the SDK's schema-driven GenericBlockRenderer (or MissingComponent for
+// forms/content blocks it doesn't attempt to generically render). That's a
+// deliberate choice, not a placeholder state: it's the fastest way to see
+// what your content model looks like rendered with zero custom UI, and the
+// baseline every custom override in a real project improves on.
+//
+// To add one back, register it here:
+//
+//   import HeroBannerDetail from "@/components/contoprix/HeroBannerDetail";
+//
+//   export const components: ComponentRegistry = {
+//     "hero_banner-detail": HeroBannerDetail,
+//   };
+//
+// See "How rendering works" in the README for the full resolution order.
+export const components: ComponentRegistry = {};
 
 export default components;

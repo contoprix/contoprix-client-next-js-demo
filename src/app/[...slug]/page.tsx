@@ -18,19 +18,17 @@ export default async function CmsPage({ params }: Props) {
 
   const resolvedSlug = `/${slug.join("/")}`;
 
-  console.log("[Contoprix page request]", {
-    slug,
-    resolvedSlug,
-  });
+  // getContoprixPage() rejects rather than resolving to null when the
+  // delivery API 404s (its return type is Promise<ContoprixPage>, never
+  // null) -- same contract PagesApi.getBySlug uses under the hood. Publish
+  // status is the only thing this route decides on, so a 404 here just
+  // means "not published," not a server error.
+  const page = await getContoprixPage({ slug: resolvedSlug }).catch((error) => {
+    if (isNotFoundError(error)) {
+      return null;
+    }
 
-  const page = await getContoprixPage({
-    slug: resolvedSlug,
-  });
-
-  console.log("[Contoprix page response]", {
-    resolvedSlug,
-    found: Boolean(page),
-    pageSlug: page?.slug,
+    throw error;
   });
 
   if (!page) {
@@ -38,4 +36,12 @@ export default async function CmsPage({ params }: Props) {
   }
 
   return <ContoprixRenderer page={page} />;
+}
+
+function isNotFoundError(error: unknown): boolean {
+  return (
+    error instanceof Error &&
+    "statusCode" in error &&
+    (error as { statusCode?: number }).statusCode === 404
+  );
 }

@@ -4,8 +4,9 @@ A reference Next.js / React application showing how to build a site on top of Co
 
 ## What this app demonstrates
 
-- **Delivery rendering** — fetching a published page by slug and rendering its blocks server-side (React Server Components).
-- **Custom components alongside the generic renderer** — [`src/contoprix/components.ts`](./src/contoprix/components.ts) registers hand-built React components for several component types (`header`, `footer`, `hero_banner`, `blog_post`, …). Any component type **not** in that registry — or any form/content-entry block — falls back to the SDK's schema-driven `GenericBlockRenderer` or the `MissingComponent` placeholder. Both paths are live on this site at once, so you can compare them directly.
+- **REST delivery calls** ([`/examples/rest`](./src/app/examples/rest/page.tsx)) — `createContoprixClient()` used directly in a Server Component to fetch a page by slug, list a content collection, and search, with the raw request/response shown alongside each call.
+- **GraphQL delivery calls** ([`/examples/graphql`](./src/app/examples/graphql/page.tsx)) — the tenant's own generated GraphQL.NET schema queried with a small delivery-key-authenticated `fetch` helper ([`src/lib/contoprix/graphql.server.ts`](./src/lib/contoprix/graphql.server.ts)); there's no GraphQL client bundled in the SDK, since every tenant's schema is different.
+- **Delivery rendering, generic-renderer-only** — the catch-all route fetches a published page by slug and renders its blocks server-side. This app intentionally ships with an **empty** component registry ([`src/contoprix/components.ts`](./src/contoprix/components.ts)), so every block — header, footer, and CMS content alike — resolves through the SDK's schema-driven `GenericBlockRenderer` (or the `MissingComponent` placeholder for forms/content-entry blocks). That's the fastest way to see your content model rendered with zero custom UI; see [How rendering works](#how-rendering-works) for how to register overrides on top of it.
 - **Live visual editing** — a `/preview/page/[pageId]` route the Contoprix admin embeds in an iframe when an editor opens the visual builder: click-to-select, the block toolbar (drag/move/duplicate/delete), the "Add item" insertion flow, and live refresh on every edit, all driven by `@contoprix/react`'s `VisualEditingBridge` over `postMessage`.
 - **ISR + webhook revalidation** — published content updates the live site via a signed CMS webhook, with time-based ISR as a safety net.
 - **A delivery-rendered form** (`/contact-us`) — the generic, schema-driven form-rendering pattern, served through a same-origin API route so the delivery key never reaches the browser.
@@ -97,6 +98,8 @@ export default components;
 ```
 
 Any code **not** in this registry — and any form or content-entry block — falls back to the schema-driven generic renderer or the placeholder. See [How rendering works](#how-rendering-works) below for the exact resolution order.
+
+This app's own registry is currently empty (see [`src/contoprix/components.ts`](./src/contoprix/components.ts)) — every block on the site renders through the generic path above. That's a deliberate demo state, not a bug: it's the baseline every custom override improves on.
 
 ### 5. Pull your schema (enables the generic renderer)
 
@@ -193,6 +196,45 @@ export async function POST(req: Request, { params }: { params: Promise<{ code: s
 
 This app's `/contact-us` page shows a fully custom, hand-styled form instead ([`ContactForm.tsx`](./src/app/contact-us/ContactForm.tsx)) built the same way — fetch the schema server-side, submit through a proxy route. Publish a form with the code set in `CONTOPRIX_DEMO_FORM_CODE` (defaults to `contact-us`) before opening the page.
 
+### 9. REST vs. GraphQL
+
+Every content delivery need above is expressed through `@contoprix/client`'s REST methods (`pages.getBySlug`, `content.list`, `search.query`, …). If your tenant's GraphQL.NET endpoint (`POST /graphql`) is a better fit — fewer round-trips for nested data, a schema your frontend can introspect — query it directly instead. There's no GraphQL client in the SDK, because the schema is generated per-tenant from your content model; querying it is a plain, delivery-key-authenticated `fetch`:
+
+```ts
+// src/lib/contoprix/graphql.server.ts
+import "server-only";
+
+export async function contoprixGraphQL<T>(query: string, variables?: Record<string, unknown>) {
+  const response = await fetch(new URL("/graphql", process.env.CONTOPRIX_BASE_URL!), {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      "x-contoprix-delivery-key": process.env.CONTOPRIX_DELIVERY_KEY!,
+    },
+    body: JSON.stringify({ query, variables }),
+    cache: "no-store",
+  });
+
+  return response.json() as Promise<{ data: T | null; errors?: { message: string }[] }>;
+}
+```
+
+`/graphql` is gated by the exact same delivery-key middleware as the REST delivery routes (see `GraphQLDeliveryRoutingTests` in the API test suite) — so this helper never needs a separate credential from the rest of the app.
+
+Compare both approaches side by side:
+
+- **`/examples/rest`** — [`src/app/examples/rest/page.tsx`](./src/app/examples/rest/page.tsx): `createContoprixClient()`, then `pages.getBySlug`, `content.list`, `search.query`.
+- **`/examples/graphql`** — [`src/app/examples/graphql/page.tsx`](./src/app/examples/graphql/page.tsx): the same underlying data (a page by path, a content collection) fetched with hand-written GraphQL queries through the helper above.
+
+Use the CLI to pull typed codegen for your tenant's GraphQL schema, mirroring `contoprix pull`/`generate` for REST:
+
+```bash
+npx contoprix graphql pull       # writes .contoprix/schema/graphql-schema.json (introspection export)
+npx contoprix graphql generate   # typed query variables/results in src/contoprix/graphql-generated.ts
+# or in one step:
+npx contoprix graphql sync
+```
+
 ---
 
 ## How rendering works
@@ -212,8 +254,14 @@ contoprix-demo-next/
 ├── .contoprix/schema/schema.json     # pulled schema, regenerated by `contoprix pull`
 ├── src/app/
 │   ├── layout.tsx                    # root layout, wraps children in LayoutChrome
-│   ├── page.tsx                      # home page (slug "/")
-│   ├── [...slug]/page.tsx            # catch-all delivery route
+│   ├── page.tsx                      # hand-built home page (slug "/" is not CMS-driven in this demo)
+│   ├── [...slug]/page.tsx            # catch-all delivery route (any other published slug)
+│   ├── examples/
+│   │   ├── layout.tsx                # shared shell + tab nav for the two example pages
+│   │   ├── ExamplesNav.tsx           # client component: active-tab highlighting
+│   │   ├── CodeBlock.tsx             # <pre> code/JSON display used by both examples
+│   │   ├── rest/page.tsx             # REST example — createContoprixClient() calls (step 9)
+│   │   └── graphql/page.tsx          # GraphQL example — contoprixGraphQL() calls (step 9)
 │   ├── preview/page/[pageId]/page.tsx# visual-editing preview route (embedded by the admin iframe)
 │   ├── contact-us/                   # hand-built form demo
 │   └── api/
@@ -223,13 +271,15 @@ contoprix-demo-next/
 │       │   └── webhook/route.ts                # signed publish webhook -> revalidatePath
 │       └── forms/[code]/route.ts     # same-origin form fetch/submit proxy (step 8)
 ├── src/contoprix/
-│   ├── components.ts                 # ComponentRegistry — custom overrides for some types
+│   ├── components.ts                 # ComponentRegistry — empty in this demo, see "What this app demonstrates"
 │   ├── schema.ts                     # buildSchemaRegistry() from the pulled schema.json
 │   ├── generated.ts                  # `contoprix generate` output (typed field helpers)
 │   ├── ContoprixRenderer.tsx         # thin wrapper around @contoprix/react's PageRenderer/BlockRenderer
 │   ├── ContoprixPreviewRenderer.tsx  # preview-route renderer: live refresh + VisualEditingBridge wiring
 │   └── LayoutChrome.tsx              # fetches __header/__footer pages, wraps every route
-└── src/components/contoprix/         # custom, hand-built React components registered in components.ts
+└── src/lib/contoprix/
+    ├── forms.server.ts               # server-only ContoprixClient for the forms demo
+    └── graphql.server.ts             # server-only contoprixGraphQL() helper (step 9)
 ```
 
 ## Running this demo
@@ -241,7 +291,7 @@ npx contoprix pull           # requires npx contoprix login first
 npm run dev
 ```
 
-Pages are served at their CMS slug, e.g. `/` for the home page.
+`/` is this demo's own hand-built landing page (not CMS-driven); every other published slug is served through the catch-all route, e.g. `/about`. Start at `/examples/rest` and `/examples/graphql` to see the SDK calls themselves.
 
 ## Available scripts
 
