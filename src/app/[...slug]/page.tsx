@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { getContoprixPage } from "@contoprix/next/server";
 
 import { ContoprixRenderer } from "@/contoprix/ContoprixRenderer";
+import { isNotFoundError } from "@/lib/contoprix/errors";
 
 export const revalidate = 60;
 export const dynamicParams = true;
@@ -36,12 +37,4 @@ export default async function CmsPage({ params }: Props) {
   }
 
   return <ContoprixRenderer page={page} />;
-}
-
-function isNotFoundError(error: unknown): boolean {
-  return (
-    error instanceof Error &&
-    "statusCode" in error &&
-    (error as { statusCode?: number }).statusCode === 404
-  );
 }

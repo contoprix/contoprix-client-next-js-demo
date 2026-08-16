@@ -1,5 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { createContoprixClient, getContoprixPage } from "@contoprix/next/server";
+import type { ContoprixContentEntry } from "@contoprix/types";
+
+import BlogPostList from "@/components/contoprix/BlogPostList";
+import { ContoprixRenderer } from "@/contoprix/ContoprixRenderer";
+import { isNotFoundError } from "@/lib/contoprix/errors";
 
 export const metadata: Metadata = {
   title: "Contoprix Demo",
@@ -7,24 +13,41 @@ export const metadata: Metadata = {
     "A Next.js reference app for the Contoprix SDK -- REST and GraphQL delivery examples, live visual editing, and forms.",
 };
 
-export default function HomePage() {
+// Live delivery data -- a published page at "/", plus "Latest from the blog" below.
+export const dynamic = "force-dynamic";
+
+export default async function HomePage() {
+  const [cmsPage, posts] = await Promise.all([loadHomePage(), loadFeaturedPosts()]);
+
   return (
     <div className="bg-white">
-      <section className="border-b border-slate-200 bg-slate-50 px-5 py-20 sm:px-8 lg:py-28">
-        <div className="mx-auto max-w-3xl text-center">
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-orange-600">
-            @contoprix/react + @contoprix/next
-          </p>
-          <h1 className="mt-4 text-4xl font-semibold tracking-tight text-slate-950 sm:text-5xl">
-            Contoprix SDK demo
-          </h1>
-          <p className="mx-auto mt-5 max-w-xl leading-7 text-slate-600">
-            A worked example of consuming Contoprix from a Next.js app: two
-            ways to fetch content -- REST and GraphQL -- plus visual editing,
-            ISR/webhook revalidation, and a schema-driven form.
-          </p>
-        </div>
-      </section>
+      {cmsPage ? (
+        // A published page at "/" -- e.g. a hero_banner + capabilities_section block --
+        // renders through the normal custom-component/generic-renderer resolution, same as
+        // any other delivery-rendered page. See src/contoprix/components.ts.
+        <ContoprixRenderer page={cmsPage} />
+      ) : (
+        <section className="border-b border-slate-200 bg-slate-50 px-5 py-20 sm:px-8 lg:py-28">
+          <div className="mx-auto max-w-3xl text-center">
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-orange-600">
+              @contoprix/react + @contoprix/next
+            </p>
+            <h1 className="mt-4 text-4xl font-semibold tracking-tight text-slate-950 sm:text-5xl">
+              Contoprix SDK demo
+            </h1>
+            <p className="mx-auto mt-5 max-w-xl leading-7 text-slate-600">
+              A worked example of consuming Contoprix from a Next.js app: two
+              ways to fetch content -- REST and GraphQL -- plus visual editing,
+              ISR/webhook revalidation, and a schema-driven form.
+            </p>
+            <p className="mx-auto mt-4 max-w-xl text-sm leading-6 text-slate-500">
+              No page is published at <code>/</code> yet -- publish one with a{" "}
+              <code>hero_banner</code> or <code>capabilities_section</code> block in the
+              Contoprix admin and it renders here automatically.
+            </p>
+          </div>
+        </section>
+      )}
 
       <section className="px-5 py-16 sm:px-8 lg:py-20">
         <div className="mx-auto max-w-4xl">
@@ -48,6 +71,24 @@ export default function HomePage() {
         </div>
       </section>
 
+      {posts.length > 0 ? (
+        <section className="border-t border-slate-200 px-5 py-16 sm:px-8 lg:py-20">
+          <div className="mx-auto max-w-5xl">
+            <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">
+              Latest from the blog
+            </h2>
+            <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-600">
+              Rendered by <code>BlogPostList</code> -- a registered custom component in{" "}
+              <code>src/contoprix/components.ts</code>, invoked directly here with real{" "}
+              <code>blog_post</code> entries fetched via <code>client.content.list()</code>.
+            </p>
+            <div className="mt-6">
+              <BlogPostList contents={posts} />
+            </div>
+          </div>
+        </section>
+      ) : null}
+
       <section className="border-t border-slate-200 bg-slate-50 px-5 py-16 sm:px-8 lg:py-20">
         <div className="mx-auto max-w-4xl">
           <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">
@@ -56,7 +97,7 @@ export default function HomePage() {
           <div className="mt-6 grid gap-6 sm:grid-cols-2">
             <InfoCard
               title="Any published page"
-              description="Visit any published slug (e.g. /about) to see it delivery-rendered through the generic, schema-driven block renderer -- this demo currently ships with no custom component overrides, so every block resolves through GenericBlockRenderer."
+              description="Visit any published slug (e.g. /about) to see it delivery-rendered. Registered custom components (src/contoprix/components.ts) render first; anything else falls back to the generic, schema-driven block renderer."
             />
             <InfoCard
               title="Contact form"
@@ -93,6 +134,36 @@ export default function HomePage() {
       </section>
     </div>
   );
+}
+
+async function loadHomePage() {
+  return getContoprixPage({ slug: "/" }).catch((error) => {
+    if (isNotFoundError(error)) return null;
+    throw error;
+  });
+}
+
+async function loadFeaturedPosts(): Promise<ContoprixContentEntry[]> {
+  try {
+    const client = createContoprixClient();
+    const { items } = await client.content.list({ contentType: "blog_post", take: 12 });
+
+    return items
+      .slice()
+      .sort((left, right) => {
+        const leftFeatured = left.data.is_featured === true;
+        const rightFeatured = right.data.is_featured === true;
+        if (leftFeatured !== rightFeatured) return leftFeatured ? -1 : 1;
+
+        const leftDate = typeof left.data.published_at === "string" ? Date.parse(left.data.published_at) : 0;
+        const rightDate = typeof right.data.published_at === "string" ? Date.parse(right.data.published_at) : 0;
+        return (rightDate || 0) - (leftDate || 0);
+      })
+      .slice(0, 3);
+  } catch (error) {
+    console.error("Failed to load blog_post entries for the home page.", error);
+    return [];
+  }
 }
 
 function ExampleCard({
