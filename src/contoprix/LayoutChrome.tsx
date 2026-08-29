@@ -2,6 +2,7 @@ import { getContoprixPage } from "@contoprix/next/server";
 import type { ContoprixPage } from "@contoprix/types";
 
 import { ContoprixRenderer } from "./ContoprixRenderer";
+import { isNotFoundError } from "@/lib/contoprix/errors";
 
 type LayoutChromeProps = {
   children: React.ReactNode;
@@ -28,7 +29,12 @@ async function getLayoutPage(slug: string): Promise<ContoprixPage | null> {
       slug,
     });
   } catch (error) {
-    console.warn(`Contoprix layout page "${slug}" could not be loaded.`, error);
+    // No page published at "__header"/"__footer" yet is the normal starting state for a
+    // website -- an editor creates it via the CMS sidebar's "Add Header"/"Add Footer" action.
+    // Only genuinely unexpected failures (auth, network, 5xx) are worth a loud warning.
+    if (!isNotFoundError(error)) {
+      console.warn(`Contoprix layout page "${slug}" could not be loaded.`, error);
+    }
 
     return null;
   }

@@ -1,3 +1,4 @@
+import { resolveContentList } from "@contoprix/react";
 import type { ContoprixComponentProps } from "@contoprix/react";
 import type { ContoprixContentEntry } from "@contoprix/types";
 import type { BlogPostContent } from "@/contoprix/generated";
@@ -9,12 +10,12 @@ const CATEGORY_LABELS: Record<string, string> = {
   tutorial: "Tutorial",
 };
 
-export default function BlogPostList({ contents }: ContoprixComponentProps) {
-  const entries = (contents as ContoprixContentEntry[] | undefined) ?? [];
+export default function BlogPostList(props: ContoprixComponentProps) {
+  const { entries, previewAttributes } = resolveContentList(props);
   if (entries.length === 0) return null;
 
   return (
-    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" {...previewAttributes}>
       {entries.map((entry) => (
         <BlogPostCard key={entry.id} entry={entry} />
       ))}

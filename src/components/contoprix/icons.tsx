@@ -1,3 +1,4 @@
+import { createElement, type SVGProps } from "react";
 import * as LucideIcons from "lucide-react";
 import { Sparkles, type LucideIcon } from "lucide-react";
 
@@ -16,4 +17,14 @@ export function resolveIcon(key: string | null | undefined): LucideIcon {
 
   const icon = (LucideIcons as unknown as Record<string, LucideIcon>)[pascalCase];
   return icon ?? Sparkles;
+}
+
+/** Every call site that resolves an icon key at render time needs to render a component whose
+ * identity isn't `resolveIcon(key)`'s return value used directly as a JSX tag -- a fresh
+ * lookup on every render reads as a brand-new component type to React (and to
+ * react-hooks/static-components), which would remount rather than update. Routing the lookup
+ * through `createElement` here (never JSX) keeps every call site's own JSX referencing this
+ * one stable, statically-declared component instead. */
+export function DynamicIcon({ icon, ...props }: { icon: string | null | undefined } & SVGProps<SVGSVGElement>) {
+  return createElement(resolveIcon(icon), props);
 }

@@ -54,7 +54,7 @@ export default async function HomePage() {
           <h2 className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">
             Delivery API examples
           </h2>
-          <div className="mt-6 grid gap-6 sm:grid-cols-2">
+          <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             <ExampleCard
               href="/examples/rest"
               eyebrow="@contoprix/client"
@@ -66,6 +66,12 @@ export default async function HomePage() {
               eyebrow="POST /graphql"
               title="GraphQL"
               description="Query the tenant's own generated GraphQL.NET schema directly with a delivery-key-authenticated fetch."
+            />
+            <ExampleCard
+              href="/examples/cards"
+              eyebrow="@contoprix/react"
+              title="Cards"
+              description="12 newly registered card components across 9 domains, each typed against the SDK's ContoprixComponentProps and rendered with sample content."
             />
           </div>
         </div>

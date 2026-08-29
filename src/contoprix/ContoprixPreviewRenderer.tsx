@@ -91,14 +91,12 @@ export function ContoprixPreviewRenderer({
   }, [pageId, refreshSchema]);
 
   useEffect(() => {
-    // Compatibility guard for SDK versions that marked resolved content and
-    // global layout blocks as visually editable. Phase 1 only supports
-    // component blocks owned by the current page draft.
-    const editableBlockIds = new Set(
-      page.blocks
-        .filter((block) => block.kind === "component")
-        .map((block) => block.id)
-    );
+    // Compatibility guard for SDK versions that marked global layout blocks (the site's
+    // shared header/footer, rendered separately via page.layout.header/footer -- never part
+    // of page.blocks) as visually editable. Every kind of block actually owned by the current
+    // page draft (component, content-single, content-list, form) is editable -- the mutation
+    // API (insert/duplicate/delete/reorder) already handles all four the same way.
+    const editableBlockIds = new Set(page.blocks.map((block) => block.id));
 
     for (const element of document.querySelectorAll<HTMLElement>("[data-contoprix-block-id]")) {
       const blockId = element.dataset.contoprixBlockId;

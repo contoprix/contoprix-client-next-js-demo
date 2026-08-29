@@ -1,11 +1,12 @@
 import { ArrowUpRight } from "lucide-react";
 
+import { resolveComponentSettings } from "@contoprix/react";
 import type { ContoprixComponentProps } from "@contoprix/react";
 import type { CapabilitiesSectionComponentSettings, CapabilityItemComponentSettings } from "@/contoprix/generated";
-import { resolveIcon } from "./icons";
+import { DynamicIcon } from "./icons";
 
-export default function CapabilitiesSectionDetail({ content }: ContoprixComponentProps) {
-  const data = content as CapabilitiesSectionComponentSettings | undefined;
+export default function CapabilitiesSectionDetail(props: ContoprixComponentProps) {
+  const { data, previewAttributes } = resolveComponentSettings<CapabilitiesSectionComponentSettings>(props);
   const items = (data?.capability_items ?? [])
     .map((wrapper) => wrapper.capability)
     .filter((item): item is CapabilityItemComponentSettings => Boolean(item?.title));
@@ -13,7 +14,7 @@ export default function CapabilitiesSectionDetail({ content }: ContoprixComponen
   if (!data?.heading && items.length === 0) return null;
 
   return (
-    <section className="bg-slate-50 px-5 py-20 sm:px-8 lg:py-28">
+    <section className="bg-slate-50 px-5 py-20 sm:px-8 lg:py-28" {...previewAttributes}>
       <div className="mx-auto max-w-6xl">
         <div className="max-w-2xl">
           {data?.eyebrow ? (
@@ -38,12 +39,10 @@ export default function CapabilitiesSectionDetail({ content }: ContoprixComponen
 }
 
 function CapabilityCard({ item }: { item: CapabilityItemComponentSettings }) {
-  const Icon = resolveIcon(item.icon);
-
   const body = (
     <>
       <span className="inline-flex size-10 items-center justify-center border border-orange-200 bg-orange-50 text-orange-600">
-        <Icon className="size-[18px]" aria-hidden />
+        <DynamicIcon icon={item.icon} className="size-[18px]" aria-hidden />
       </span>
       <h3 className="mt-6 text-base font-semibold text-slate-950">{item.title}</h3>
       {item.description ? <p className="mt-2 text-sm leading-6 text-slate-600">{item.description}</p> : null}

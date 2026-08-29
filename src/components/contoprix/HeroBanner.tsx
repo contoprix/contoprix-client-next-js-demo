@@ -1,15 +1,14 @@
+import { resolveComponentSettings } from "@contoprix/react";
 import type { ContoprixComponentProps } from "@contoprix/react";
 import type { HeroBannerComponentSettings } from "@/contoprix/generated";
-import { resolveIcon } from "./icons";
+import { DynamicIcon } from "./icons";
 
-export default function HeroBannerDetail({ content }: ContoprixComponentProps) {
-  const data = content as HeroBannerComponentSettings | undefined;
+export default function HeroBannerDetail(props: ContoprixComponentProps) {
+  const { data, previewAttributes } = resolveComponentSettings<HeroBannerComponentSettings>(props);
   if (!data?.heading) return null;
 
-  const CalloutIcon = data.callout?.callout_icon ? resolveIcon(data.callout.callout_icon) : null;
-
   return (
-    <section className="border-b border-slate-800 bg-slate-950 text-white">
+    <section className="border-b border-slate-800 bg-slate-950 text-white" {...previewAttributes}>
       <div className="mx-auto grid max-w-6xl gap-12 px-5 py-20 sm:px-8 lg:grid-cols-[1fr_auto] lg:items-center lg:py-28">
         <div>
           {data.eyebrow ? (
@@ -29,7 +28,9 @@ export default function HeroBannerDetail({ content }: ContoprixComponentProps) {
 
         {data.callout?.description ? (
           <aside className="max-w-xs border-l border-slate-700 pl-6">
-            {CalloutIcon ? <CalloutIcon className="mb-4 size-6 text-orange-500" aria-hidden /> : null}
+            {data.callout?.callout_icon ? (
+              <DynamicIcon icon={data.callout.callout_icon} className="mb-4 size-6 text-orange-500" aria-hidden />
+            ) : null}
             <p className="text-base leading-7 text-slate-300">{data.callout.description}</p>
           </aside>
         ) : null}

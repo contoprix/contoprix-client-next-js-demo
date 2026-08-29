@@ -1,5 +1,5 @@
+import { resolveContentEntry } from "@contoprix/react";
 import type { ContoprixComponentProps } from "@contoprix/react";
-import type { ContoprixContentEntry } from "@contoprix/types";
 import type { BlogPostContent } from "@/contoprix/generated";
 import Button from "./Button";
 import { RichText } from "./richtext";
@@ -11,16 +11,15 @@ const CATEGORY_LABELS: Record<string, string> = {
   tutorial: "Tutorial",
 };
 
-export default function BlogPostDetail({ content }: ContoprixComponentProps) {
-  const entry = content as ContoprixContentEntry | undefined;
-  if (!entry) return null;
+export default function BlogPostDetail(props: ContoprixComponentProps) {
+  const { data, previewAttributes } = resolveContentEntry<Partial<BlogPostContent>>(props);
+  if (!data) return null;
 
-  const data = entry.data as Partial<BlogPostContent>;
   const image = mediaUrl(data.featured_image);
   const publishedLabel = formatDate(data.published_at);
 
   return (
-    <article className="mx-auto max-w-3xl px-5 py-16 sm:px-8">
+    <article className="mx-auto max-w-3xl px-5 py-16 sm:px-8" {...previewAttributes}>
       {data.category ? (
         <span className="w-fit border border-slate-200 px-2 py-0.5 text-xs font-medium text-slate-600">
           {CATEGORY_LABELS[data.category] ?? data.category}
@@ -48,7 +47,7 @@ export default function BlogPostDetail({ content }: ContoprixComponentProps) {
 
       {data.cta ? (
         <div className="mt-10">
-          <Button content={data.cta} />
+          <Button settings={data.cta as unknown as Record<string, unknown>} />
         </div>
       ) : null}
     </article>

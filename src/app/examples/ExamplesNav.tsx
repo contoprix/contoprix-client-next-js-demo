@@ -6,6 +6,8 @@ import { usePathname } from "next/navigation";
 const TABS = [
   { href: "/examples/rest", label: "REST" },
   { href: "/examples/graphql", label: "GraphQL" },
+  { href: "/examples/cards", label: "Cards" },
+  { href: "/examples/blocks", label: "Blocks" },
 ];
 
 export function ExamplesNav() {
